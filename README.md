@@ -6,7 +6,7 @@ Software Development Workshiop II Group Project
 Current Status: `Requirement Desiging`
 
 ## Project Basic Information
-![AGMS Black Icon](design/img/logo_black.svg)
+![GMS Black Icon](design/img/logo_t_black.png)
 
 A Gym management System
 
