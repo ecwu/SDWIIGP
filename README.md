@@ -7,7 +7,9 @@ Current Status: `Requirement Desiging`
 
 ## Project Basic Information
 ![AGMS Black Icon](design/img/logo_black.svg)
+
 A Gym management System
+
 Name: To be announced
 
 ## Author
