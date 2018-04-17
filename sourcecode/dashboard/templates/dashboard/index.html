@@ -159,6 +159,11 @@
                                     <a href="#" class="dropdown-item ">Coach</a>
                                 </div>
                             </li>
+                            {% if user.is_superuser %}
+                                  <li class="nav-item dropdown">
+                                    <a href = "/admin"  class="nav-link">Manage Page</a>
+                                  </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
