@@ -89,6 +89,12 @@
                       <small class="text-muted d-block mt-1">
                           {% if user.is_superuser %}
                           Developer
+                          {% else %}
+                              {% if user.is_staff %}
+                              Staff
+                              {% else %}
+                                Member
+                              {% endif %}
                           {% endif %}
                       </small>
                     </span>
