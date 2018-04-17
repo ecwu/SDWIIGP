@@ -7,6 +7,8 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 def login_page(request):
+    if request.user.is_authenticated:
+        return redirect('/dashboard')
     return render(request, 'pages/login.html')
 
 
