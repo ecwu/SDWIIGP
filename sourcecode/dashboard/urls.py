@@ -20,4 +20,5 @@ from . import views
 
 urlpatterns = [
     path('dashboard/', views.dashboard),
+    path('user/', views.user_info, name="user_info"),
 ]

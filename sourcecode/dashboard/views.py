@@ -11,3 +11,9 @@ def dashboard(request):
     if not request.user.is_authenticated:
         return redirect('/')
     return render(request, 'dashboard/index.html')
+
+
+def user_info(request):
+    if not request.user.is_authenticated:
+        return redirect('/')
+    return render(request, 'dashboard/user.html')
