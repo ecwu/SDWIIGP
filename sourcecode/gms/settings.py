@@ -77,8 +77,14 @@ WSGI_APPLICATION = 'gms.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'l630003054',
+        'USER': 'l630003054',
+        'PASSWORD': 'SDW2db',
+        'HOST': '172.16.199.70',
+        'PORT': '3306',
     }
 }
 
