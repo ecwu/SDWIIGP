@@ -15,7 +15,7 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
     <!-- Generated: 2018-04-06 16:27:42 +0200 -->
-    <title>Homepage - tabler.github.io - a responsive, flat and full featured admin template</title>
+    <title>Dashboard - Gym management system</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
@@ -47,10 +47,6 @@
                         <img src="{% static 'img/logo_black.svg' %}" class="header-brand-img" alt="tabler logo">
                     </a>
                     <div class="d-flex order-lg-2 ml-auto">
-                        <div class="nav-item d-none d-md-flex">
-                            <a href="https://github.com/tabler/tabler" class="btn btn-sm btn-outline-primary"
-                               target="_blank">Source code</a>
-                        </div>
                         <div class="dropdown d-none d-md-flex">
                             <a class="nav-link icon" data-toggle="dropdown">
                                 <i class="fe fe-bell"></i>
@@ -87,10 +83,14 @@
                         </div>
                         <div class="dropdown">
                             <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
-                                <span class="avatar" style="background-image: url(./demo/faces/female/25.jpg)"></span>
+                                <span class="avatar">{{ user.first_name|first }}{{ user.last_name|first }}</span>
                                 <span class="ml-2 d-none d-lg-block">
-                      <span class="text-default">Jane Pearson</span>
-                      <small class="text-muted d-block mt-1">Administrator</small>
+                      <span class="text-default">{{ user.first_name }} {{ user.last_name }}</span>
+                      <small class="text-muted d-block mt-1">
+                          {% if user.is_superuser %}
+                          Developer
+                          {% endif %}
+                      </small>
                     </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
@@ -256,8 +256,7 @@
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td class="w-1"><span class="avatar"
-                                                              style="background-image: url(./demo/faces/male/9.jpg)"></span>
+                                        <td class="w-1"><span class="avatar">BM</span>
                                         </td>
                                         <td>Ronald Bradley</td>
                                         <td>Initial commit</td>
@@ -272,16 +271,14 @@
                                         <td><a href="#" class="icon"><i class="fe fe-trash"></i></a></td>
                                     </tr>
                                     <tr>
-                                        <td><span class="avatar"
-                                                  style="background-image: url(./demo/faces/female/1.jpg)"></span></td>
+                                        <td><span class="avatar">BM</span></td>
                                         <td>Beverly Armstrong</td>
                                         <td>Left sidebar adjustments</td>
                                         <td class="text-nowrap">April 15, 2018</td>
                                         <td><a href="#" class="icon"><i class="fe fe-trash"></i></a></td>
                                     </tr>
                                     <tr>
-                                        <td><span class="avatar"
-                                                  style="background-image: url(./demo/faces/male/4.jpg)"></span></td>
+                                        <td><span class="avatar">BM</span></td>
                                         <td>Bobby Knight</td>
                                         <td>Topbar dropdown style</td>
                                         <td class="text-nowrap">April 8, 2018</td>
