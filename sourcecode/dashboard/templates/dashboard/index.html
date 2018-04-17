@@ -138,7 +138,9 @@
                                 <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i
                                         class="fe fe-box"></i> Operation</a>
                                 <div class="dropdown-menu dropdown-menu-arrow">
-                                    <a href="./cards.html" class="dropdown-item ">Check-in</a>
+                                    {% if user.is_superuser or user.is_staff %}
+                                        <a href="./cards.html" class="dropdown-item ">Check-in</a>
+                                    {% endif %}
                                     <a href="./charts.html" class="dropdown-item ">Recharge</a>
                                 </div>
                             </li>
@@ -150,21 +152,25 @@
                                     <a href="./icons.html" class="dropdown-item ">New</a>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a href="" class="nav-link" data-toggle="dropdown"><i
-                                        class="fe fe-file"></i> Report / Setting</a>
-                                <div class="dropdown-menu dropdown-menu-arrow">
-                                    <a href="#" class="dropdown-item ">Balance</a>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link" data-toggle="dropdown"><i class="fe fe-file-text"></i>
-                                    Create User</a>
-                                <div class="dropdown-menu dropdown-menu-arrow">
-                                    <a href="#" class="dropdown-item ">Member</a>
-                                    <a href="#" class="dropdown-item ">Coach</a>
-                                </div>
-                            </li>
+                            {% if user.is_superuser or user.is_staff %}
+                                <li class="nav-item dropdown">
+                                    <a href="" class="nav-link" data-toggle="dropdown"><i
+                                            class="fe fe-file"></i> Report / Setting</a>
+                                    <div class="dropdown-menu dropdown-menu-arrow">
+                                        <a href="#" class="dropdown-item ">Balance</a>
+                                    </div>
+                                </li>
+                            {% endif %}
+                            {% if user.is_superuser or user.is_staff %}
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link" data-toggle="dropdown"><i class="fe fe-file-text"></i>
+                                        Create User</a>
+                                    <div class="dropdown-menu dropdown-menu-arrow">
+                                        <a href="#" class="dropdown-item ">Member</a>
+                                        <a href="#" class="dropdown-item ">Coach</a>
+                                    </div>
+                                </li>
+                            {% endif %}
                             {% if user.is_superuser %}
                                   <li class="nav-item dropdown">
                                     <a href = "/admin"  class="nav-link">Manage Page</a>
