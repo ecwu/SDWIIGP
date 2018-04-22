@@ -20,4 +20,5 @@ from . import views
 
 urlpatterns = [
     path('operation/', views.operation_checkin, name="operation_checkin"),
+    path('operation/recharge/', views.operation_recharge, name="operation_recharge"),
 ]

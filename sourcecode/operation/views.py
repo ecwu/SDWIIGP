@@ -9,3 +9,9 @@ def operation_checkin(request):
     if not request.user.is_authenticated:
         return redirect('/')
     return render(request, 'operation/index.html')
+
+
+def operation_recharge(request):
+    if not request.user.is_authenticated:
+        return redirect('/')
+    return render(request, 'operation/recharge.html')

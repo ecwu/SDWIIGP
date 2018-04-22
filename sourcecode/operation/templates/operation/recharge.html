@@ -15,7 +15,7 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
     <!-- Generated: 2018-04-06 16:27:42 +0200 -->
-    <title>Operation - Gym management system</title>
+    <title>Recharge - Gym management system</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
@@ -139,9 +139,9 @@
                                         class="fe fe-box"></i> Operation</a>
                                 <div class="dropdown-menu dropdown-menu-arrow">
                                     {% if user.is_superuser or user.is_staff %}
-                                    <a href="{% url 'operation_checkin' %}" class="dropdown-item active">Check-in</a>
+                                    <a href="{% url 'operation_checkin' %}" class="dropdown-item">Check-in</a>
                                     {% endif %}
-                                    <a href="{% url 'operation_recharge' %}" class="dropdown-item">Recharge</a>
+                                    <a href="{% url 'operation_recharge' %}" class="dropdown-item active">Recharge</a>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -153,28 +153,28 @@
                                 </div>
                             </li>
                             {% if user.is_superuser or user.is_staff %}
-                                <li class="nav-item dropdown">
-                                    <a href="" class="nav-link" data-toggle="dropdown"><i
-                                            class="fe fe-file"></i> Report / Setting</a>
-                                    <div class="dropdown-menu dropdown-menu-arrow">
-                                        <a href="#" class="dropdown-item ">Balance</a>
-                                    </div>
-                                </li>
+                            <li class="nav-item dropdown">
+                                <a href="" class="nav-link" data-toggle="dropdown"><i
+                                        class="fe fe-file"></i> Report / Setting</a>
+                                <div class="dropdown-menu dropdown-menu-arrow">
+                                    <a href="#" class="dropdown-item ">Balance</a>
+                                </div>
+                            </li>
                             {% endif %}
                             {% if user.is_superuser or user.is_staff %}
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link" data-toggle="dropdown"><i class="fe fe-file-text"></i>
-                                        Create User</a>
-                                    <div class="dropdown-menu dropdown-menu-arrow">
-                                        <a href="#" class="dropdown-item ">Member</a>
-                                        <a href="#" class="dropdown-item ">Coach</a>
-                                    </div>
-                                </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-toggle="dropdown"><i class="fe fe-file-text"></i>
+                                    Create User</a>
+                                <div class="dropdown-menu dropdown-menu-arrow">
+                                    <a href="#" class="dropdown-item ">Member</a>
+                                    <a href="#" class="dropdown-item ">Coach</a>
+                                </div>
+                            </li>
                             {% endif %}
                             {% if user.is_superuser %}
-                                <li class="nav-item dropdown">
-                                    <a href="/admin" class="nav-link">Manage Page</a>
-                                </li>
+                            <li class="nav-item dropdown">
+                                <a href="/admin" class="nav-link">Manage Page</a>
+                            </li>
                             {% endif %}
                         </ul>
                     </div>
@@ -188,11 +188,12 @@
                         <h3 class="page-title mb-5">Operation</h3>
                         <div>
                             <div class="list-group list-group-transparent mb-0">
-                                <a href="{% url 'operation_checkin' %}"
-                                   class="list-group-item list-group-item-action d-flex align-items-center active">
+                                <a href="{% url 'operation_checkin' %} "
+                                   class="list-group-item list-group-item-action d-flex align-items-center">
                                     <span class="icon mr-3"><i class="fe fe-inbox"></i></span>Check-in
                                 </a>
-                                <a href="{% url 'operation_recharge' %}" class="list-group-item list-group-item-action d-flex align-items-center">
+                                <a href="{% url 'operation_recharge' %}"
+                                   class="list-group-item list-group-item-action d-flex align-items-center active">
                                     <span class="icon mr-3"><i class="fe fe-trash-2"></i></span>Recharge
                                 </a>
                             </div>
@@ -201,7 +202,7 @@
                     <div class="col-md-9">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">Check-in</h3>
+                                <h3 class="card-title">Recharge</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -210,12 +211,35 @@
                                             <div class="form-group">
                                                 <div class="row align-items-center">
                                                     <div class="col">
-                                                        <input type="text" placeholder="Member ID" class="form-control">
+                                                        <input type="text" placeholder="Member ID"
+                                                               class="form-control mb-3">
+                                                    </div>
+                                                </div>
+                                                <div class="row align-items-center">
+                                                    <div class="col">
+                                                        <input type="text" placeholder="Recharge Quota"
+                                                               class="form-control mb-3">
+                                                    </div>
+                                                </div>
+                                                <div class="row align-items-center">
+                                                    <div class="col">
+                                                        <div class="selectgroup w-100">
+                                                            <label class="selectgroup-item">
+                                                                <input type="radio" name="value" value="50"
+                                                                       class="selectgroup-input" checked="">
+                                                                <span class="selectgroup-button">Wechat</span>
+                                                            </label>
+                                                            <label class="selectgroup-item">
+                                                                <input type="radio" name="value" value="100"
+                                                                       class="selectgroup-input">
+                                                                <span class="selectgroup-button">Alipay</span>
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="btn-list mt-4 text-right">
-                                                <button type="submit" class="btn btn-primary btn-space">Check-in
+                                                <button type="submit" class="btn btn-primary btn-space">Submit
                                                 </button>
                                             </div>
                                         </form>
@@ -240,7 +264,8 @@
                                                         <span class="tag-addon">537 Days</span>
                                                     </div>
                                                 </div>
-                                                <div class="d-flex justify-content-md-around" style="padding-top: 1rem;">
+                                                <div class="d-flex justify-content-md-around"
+                                                     style="padding-top: 1rem;">
                                                     <div class="tag tag-success">
                                                         Quota
                                                         <span class="tag-addon">4 Times</span>
@@ -250,6 +275,44 @@
                                                         <span class="tag-addon">0</span>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="card">
+                                            <div class="card-status bg-success"></div>
+                                            <div class="card-header">
+                                                <h3 class="card-title">WeChat</h3>
+                                                <div class="card-options">
+                                                    <a href="#" class="card-options-collapse"
+                                                       data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                    <a href="#" class="card-options-remove" data-toggle="card-remove"><i
+                                                            class="fe fe-x"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <img class="img-fluid"
+                                                     src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=Hello%20world&choe=UTF-8">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="card">
+                                            <div class="card-status bg-info"></div>
+                                            <div class="card-header">
+                                                <h3 class="card-title">Alipay</h3>
+                                                <div class="card-options">
+                                                    <a href="#" class="card-options-collapse"
+                                                       data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                    <a href="#" class="card-options-remove" data-toggle="card-remove"><i
+                                                            class="fe fe-x"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <img class="img-fluid"
+                                                     src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=Hello%20world&choe=UTF-8">
                                             </div>
                                         </div>
                                     </div>
