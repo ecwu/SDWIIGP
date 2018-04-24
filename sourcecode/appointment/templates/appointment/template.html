@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Check in - Gym management system</title>
+    <title>TBF - Gym management system</title>
     <!-- font-awesome icon set core -->
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet"
@@ -29,7 +29,7 @@
     <!-- Input Mask Plugin -->
     <script src="{% static 'plugins/input-mask/plugin.js' %}"></script>
 </head>
-<body class="">
+<body>
 <div class="page">
     <div class="page-main">
         <div class="header py-4">
@@ -43,19 +43,19 @@
                             <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
                                 <span class="avatar">{{ user.first_name|first }}{{ user.last_name|first }}</span>
                                 <span class="ml-2 d-none d-lg-block">
-                      <span class="text-default">{{ user.first_name }} {{ user.last_name }}</span>
-                      <small class="text-muted d-block mt-1">
-                          {% if user.is_superuser %}
-                              Developer
-                          {% else %}
-                              {% if user.is_staff %}
-                                  Staff
-                              {% else %}
-                                  Member
-                              {% endif %}
-                          {% endif %}
-                      </small>
-                    </span>
+                            <span class="text-default">{{ user.first_name }} {{ user.last_name }}</span>
+                            <small class="text-muted d-block mt-1">
+                                {% if user.is_superuser %}
+                                Developer
+                                {% else %}
+                                    {% if user.is_staff %}
+                                    Staff
+                                    {% else %}
+                                      Member
+                                    {% endif %}
+                                {% endif %}
+                            </small>
+                        </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                 <a class="dropdown-item" href="{% url 'user_info' %}">
@@ -93,11 +93,11 @@
                                 <a href="/" class="nav-link"><i class="fe fe-home"></i> Home</a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link active" data-toggle="dropdown"><i
+                                <a href="" class="nav-link" data-toggle="dropdown"><i
                                         class="fe fe-box"></i> Operation</a>
                                 <div class="dropdown-menu dropdown-menu-arrow">
                                     {% if user.is_superuser or user.is_staff %}
-                                    <a href="/operation" class="dropdown-item active">Check-in</a>
+                                    <a href="/operation" class="dropdown-item">Check-in</a>
                                     {% endif %}
                                     <a href="/operation/recharge" class="dropdown-item">Recharge</a>
                                 </div>

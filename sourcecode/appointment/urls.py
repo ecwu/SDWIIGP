@@ -19,4 +19,6 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
+    path('appointment/', views.exist_appointment, name="exist_appointment"),
+    path('appointment/new/', views.new_appointment, name="new_appointment")
 ]
