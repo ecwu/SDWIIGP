@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'login',
     'dashboard',
     'operation',
+    'appointment',
+    'report',
+    'create',
 ]
 
 MIDDLEWARE = [
