@@ -46,12 +46,12 @@
                             <span class="text-default">{{ user.first_name }} {{ user.last_name }}</span>
                             <small class="text-muted d-block mt-1">
                                 {% if user.is_superuser %}
-                                Developer
+                                    Developer
                                 {% else %}
                                     {% if user.is_staff %}
-                                    Staff
+                                        Staff
                                     {% else %}
-                                      Member
+                                        Member
                                     {% endif %}
                                 {% endif %}
                             </small>
@@ -97,7 +97,7 @@
                                         class="fe fe-box"></i> Operation</a>
                                 <div class="dropdown-menu dropdown-menu-arrow">
                                     {% if user.is_superuser or user.is_staff %}
-                                    <a href="/operation" class="dropdown-item">Check-in</a>
+                                        <a href="/operation" class="dropdown-item">Check-in</a>
                                     {% endif %}
                                     <a href="/operation/recharge" class="dropdown-item">Recharge</a>
                                 </div>
@@ -111,28 +111,28 @@
                                 </div>
                             </li>
                             {% if user.is_superuser or user.is_staff %}
-                            <li class="nav-item dropdown">
-                                <a href="" class="nav-link" data-toggle="dropdown"><i
-                                        class="fe fe-file"></i> Report / Setting</a>
-                                <div class="dropdown-menu dropdown-menu-arrow">
-                                    <a href="/report" class="dropdown-item ">Balance</a>
-                                </div>
-                            </li>
+                                <li class="nav-item dropdown">
+                                    <a href="" class="nav-link" data-toggle="dropdown"><i
+                                            class="fe fe-file"></i> Report / Setting</a>
+                                    <div class="dropdown-menu dropdown-menu-arrow">
+                                        <a href="/report" class="dropdown-item ">Balance</a>
+                                    </div>
+                                </li>
                             {% endif %}
                             {% if user.is_superuser or user.is_staff %}
-                            <li class="nav-item">
-                                <a href="#" class="nav-link" data-toggle="dropdown"><i class="fe fe-file-text"></i>
-                                    Create User</a>
-                                <div class="dropdown-menu dropdown-menu-arrow">
-                                    <a href="/create/member" class="dropdown-item ">Member</a>
-                                    <a href="/create/coach" class="dropdown-item ">Coach</a>
-                                </div>
-                            </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link" data-toggle="dropdown"><i class="fe fe-file-text"></i>
+                                        Create User</a>
+                                    <div class="dropdown-menu dropdown-menu-arrow">
+                                        <a href="/create/member" class="dropdown-item ">Member</a>
+                                        <a href="/create/coach" class="dropdown-item ">Coach</a>
+                                    </div>
+                                </li>
                             {% endif %}
                             {% if user.is_superuser %}
-                            <li class="nav-item dropdown">
-                                <a href="/admin" class="nav-link">Manage Page</a>
-                            </li>
+                                <li class="nav-item dropdown">
+                                    <a href="/admin" class="nav-link">Manage Page</a>
+                                </li>
                             {% endif %}
                         </ul>
                     </div>
@@ -166,69 +166,36 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label class="form-label">Password</label>
-                                            <input type="password" class="form-control"
-                                                   name="example-password-input" placeholder="Password..">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Valid State</label>
-                                            <input type="text" class="form-control is-valid"
-                                                   name="example-text-input-valid" placeholder="Valid State..">
-                                            <input type="text" class="form-control mt-3 state-valid"
-                                                   value="Valid state">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Invalid State</label>
-                                            <input type="text" class="form-control is-invalid"
-                                                   name="example-text-input-invalid" placeholder="Invalid State..">
-                                            <div class="invalid-feedback">Invalid feedback</div>
-                                            <input type="text" class="form-control mt-3 state-invalid"
-                                                   value="Invalid state">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Country</label>
+                                            <label class="form-label">Coach</label>
                                             <select class="form-control custom-select">
-                                                <option value="">Germany</option>
+                                                <option value="">Muscle Man</option>
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Ratios</label>
-                                            <div class="row align-items-center">
-                                                <div class="col">
-                                                    <input type="range" class="form-control custom-range" step="5"
-                                                           min="0" max="50">
-                                                </div>
-                                                <div class="col-auto">
-                                                    <input type="number" class="form-control w-8" value="45">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">Date</label>
+                                                    <input type="text" name="field-name" class="form-control"
+                                                           data-mask="00/00/0000" data-mask-clearifnotmatch="true"
+                                                           placeholder="00/00/0000" autocomplete="off" maxlength="10">
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Size</label>
-                                            <div class="selectgroup w-100">
-                                                <label class="selectgroup-item">
-                                                    <input type="radio" name="value" value="50"
-                                                           class="selectgroup-input" checked="">
-                                                    <span class="selectgroup-button">S</span>
-                                                </label>
-                                                <label class="selectgroup-item">
-                                                    <input type="radio" name="value" value="100"
-                                                           class="selectgroup-input">
-                                                    <span class="selectgroup-button">M</span>
-                                                </label>
-                                                <label class="selectgroup-item">
-                                                    <input type="radio" name="value" value="150"
-                                                           class="selectgroup-input">
-                                                    <span class="selectgroup-button">L</span>
-                                                </label>
-                                                <label class="selectgroup-item">
-                                                    <input type="radio" name="value" value="200"
-                                                           class="selectgroup-input">
-                                                    <span class="selectgroup-button">XL</span>
-                                                </label>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">Hour</label>
+                                                    <input type="text" name="field-name" class="form-control"
+                                                           data-mask="00:00:00" data-mask-clearifnotmatch="true"
+                                                           placeholder="00:00:00" autocomplete="off" maxlength="8">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <div class="d-flex">
+                                    <a href="#" class="btn btn-link">Cancel</a>
+                                    <button type="submit" class="btn btn-primary ml-auto">Submit</button>
                                 </div>
                             </div>
                         </div>

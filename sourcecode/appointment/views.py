@@ -4,7 +4,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 
-# Create your views here.
 
 def exist_appointment(request):
     if not request.user.is_authenticated:
