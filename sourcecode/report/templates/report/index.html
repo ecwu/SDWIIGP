@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Dashboard - Gym management system</title>
+    <title>Report - Gym management system</title>
     <!-- font-awesome icon set core -->
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet"
@@ -46,12 +46,12 @@
                           <span class="text-default">{{ user.first_name }} {{ user.last_name }}</span>
                           <small class="text-muted d-block mt-1">
                               {% if user.is_superuser %}
-                                  Developer
+                              Developer
                               {% else %}
                                   {% if user.is_staff %}
-                                      Staff
+                                  Staff
                                   {% else %}
-                                      Member
+                                    Member
                                   {% endif %}
                               {% endif %}
                           </small>
@@ -90,14 +90,14 @@
                     <div class="col-lg order-lg-first">
                         <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                             <li class="nav-item">
-                                <a href="/" class="nav-link active"><i class="fe fe-home"></i> Home</a>
+                                <a href="/" class="nav-link"><i class="fe fe-home"></i> Home</a>
                             </li>
                             <li class="nav-item">
                                 <a href="" class="nav-link" data-toggle="dropdown"><i
                                         class="fe fe-box"></i> Operation</a>
                                 <div class="dropdown-menu dropdown-menu-arrow">
                                     {% if user.is_superuser or user.is_staff %}
-                                        <a href="/operation" class="dropdown-item">Check-in</a>
+                                    <a href="/operation" class="dropdown-item">Check-in</a>
                                     {% endif %}
                                     <a href="/operation/recharge" class="dropdown-item">Recharge</a>
                                 </div>
@@ -111,28 +111,28 @@
                                 </div>
                             </li>
                             {% if user.is_superuser or user.is_staff %}
-                                <li class="nav-item dropdown">
-                                    <a href="" class="nav-link" data-toggle="dropdown"><i
-                                            class="fe fe-file"></i> Report / Setting</a>
-                                    <div class="dropdown-menu dropdown-menu-arrow">
-                                        <a href="/report" class="dropdown-item ">Balance</a>
-                                    </div>
-                                </li>
+                            <li class="nav-item dropdown">
+                                <a href="" class="nav-link active" data-toggle="dropdown"><i
+                                        class="fe fe-file"></i> Report / Setting</a>
+                                <div class="dropdown-menu dropdown-menu-arrow">
+                                    <a href="/report" class="dropdown-item active">Balance</a>
+                                </div>
+                            </li>
                             {% endif %}
                             {% if user.is_superuser or user.is_staff %}
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link" data-toggle="dropdown"><i class="fe fe-file-text"></i>
-                                        Create User</a>
-                                    <div class="dropdown-menu dropdown-menu-arrow">
-                                        <a href="/create/member" class="dropdown-item ">Member</a>
-                                        <a href="/create/coach" class="dropdown-item ">Coach</a>
-                                    </div>
-                                </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-toggle="dropdown"><i class="fe fe-file-text"></i>
+                                    Create User</a>
+                                <div class="dropdown-menu dropdown-menu-arrow">
+                                    <a href="/create/member" class="dropdown-item ">Member</a>
+                                    <a href="/create/coach" class="dropdown-item ">Coach</a>
+                                </div>
+                            </li>
                             {% endif %}
                             {% if user.is_superuser %}
-                                <li class="nav-item dropdown">
-                                    <a href="/admin" class="nav-link">Manage Page</a>
-                                </li>
+                            <li class="nav-item dropdown">
+                                <a href="/admin" class="nav-link">Manage Page</a>
+                            </li>
                             {% endif %}
                         </ul>
                     </div>
@@ -141,112 +141,138 @@
         </div>
         <div class="my-3 my-md-5">
             <div class="container">
-                <div class="page-header">
+                <div class="page-header d-flex justify-content-between align-items-center">
                     <h1 class="page-title">
-                        Dashboard
+                        Balance Report
                     </h1>
+                    <span>
+                        Time: {% now "Y-m-d H:i:s.ms" %}
+                    </span>
                 </div>
                 <div class="row row-cards">
                     <div class="col-6 col-sm-4 col-lg-2">
                         <div class="card">
-                            <div class="card-status bg-orange"></div>
                             <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fe fe-box"></i></div>
-                                <div class="text-muted mb-4">Operation</div>
+                                <div class="text-right">
+                                    <i class="fa fa-paperclip"></i>
+                                </div>
+                                <div class="h1 m-0">653</div>
+                                <div class="text-muted mb-4">Member number</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-6 col-sm-4 col-lg-2">
                         <div class="card">
-                            <div class="card-status bg-orange-light"></div>
                             <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fa fa-inbox"></i></div>
-                                <div class="text-muted mb-4"><a href="#">Check-in</a></div>
+                                <div class="text-right">
+                                    <i class="fa fa-link"></i>
+                                </div>
+                                <div class="h1 m-0">56</div>
+                                <div class="text-muted mb-4">Coach number</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-6 col-sm-4 col-lg-2">
                         <div class="card">
-                            <div class="card-status bg-orange-light"></div>
                             <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fa fa-money"></i></div>
-                                <div class="text-muted mb-4"><a href="#">Recharge</a></div>
+                                <div class="text-right">
+                                    <i class="fa fa-money"></i>
+                                </div>
+                                <div class="h1 m-0">7</div>
+                                <div class="text-muted mb-4">New Recharge</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-6 col-sm-4 col-lg-2">
                         <div class="card">
-                            <div class="card-status bg-green"></div>
                             <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fe fe-calendar"></i></div>
-                                <div class="text-muted mb-4">Appointment</div>
+                                <div class="text-right">
+                                    <i class="fa fa-line-chart"></i>
+                                </div>
+                                <div class="h1 m-0">27.3K</div>
+                                <div class="text-muted mb-4">Balance</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-6 col-sm-4 col-lg-2">
                         <div class="card">
-                            <div class="card-status bg-green-light"></div>
                             <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fa fa-bars"></i></div>
-                                <div class="text-muted mb-4"><a href="#">Record</a></div>
+                                <div class="text-right">
+                                    <i class="fa fa-rocket"></i>
+                                </div>
+                                <div class="h1 m-0">$95</div>
+                                <div class="text-muted mb-4">Daily Earnings</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-6 col-sm-4 col-lg-2">
                         <div class="card">
-                            <div class="card-status bg-green-light"></div>
                             <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fa fa-calendar-plus-o"></i></div>
-                                <div class="text-muted mb-4"><a href="#">New</a></div>
+                                <div class="text-right">
+                                    <i class="fa fa-signal"></i>
+                                </div>
+                                <div class="h1 m-0">65</div>
+                                <div class="text-muted mb-4">Human Traffic</div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row row-cards">
-                    <div class="col-6 col-sm-4 col-lg-2">
-                        <div class="card">
-                            <div class="card-status bg-blue"></div>
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fe fe-file"></i></div>
-                                <div class="text-muted mb-4">Report</div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card p-3">
+                            <div class="d-flex align-items-center">
+                        <span class="stamp stamp-md bg-blue mr-3">
+                          <i class="fe fe-dollar-sign"></i>
+                        </span>
+                                <div>
+                                    <h4 class="m-0"><a href="javascript:void(0)">132
+                                        <small>Rechange</small>
+                                    </a></h4>
+                                    <small class="text-muted">12 waiting payments</small>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-sm-4 col-lg-2">
-                        <div class="card">
-                            <div class="card-status bg-blue-light"></div>
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fa fa-line-chart"></i></div>
-                                <div class="text-muted mb-4"><a href="#">Balance Report</a></div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card p-3">
+                            <div class="d-flex align-items-center">
+                        <span class="stamp stamp-md bg-green mr-3">
+                          <i class="fe fe-shopping-cart"></i>
+                        </span>
+                                <div>
+                                    <h4 class="m-0"><a href="javascript:void(0)">78
+                                        <small>Appointment</small>
+                                    </a></h4>
+                                    <small class="text-muted">4 Ongoing</small>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row row-cards">
-                    <div class="col-6 col-sm-4 col-lg-2">
-                        <div class="card">
-                            <div class="card-status bg-purple"></div>
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fe fe-file-text"></i></div>
-                                <div class="text-muted mb-4">Create</div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card p-3">
+                            <div class="d-flex align-items-center">
+                        <span class="stamp stamp-md bg-red mr-3">
+                          <i class="fe fe-users"></i>
+                        </span>
+                                <div>
+                                    <h4 class="m-0"><a href="javascript:void(0)">653
+                                        <small>Members</small>
+                                    </a></h4>
+                                    <small class="text-muted">4 registered today</small>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-sm-4 col-lg-2">
-                        <div class="card">
-                            <div class="card-status bg-purple-light"></div>
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fa fa-user-o"></i></div>
-                                <div class="text-muted mb-4"><a href="#">Create Member</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-4 col-lg-2">
-                        <div class="card">
-                            <div class="card-status bg-purple-light"></div>
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fa fa-address-card"></i></div>
-                                <div class="text-muted mb-4"><a href="#">Create Coach</a></div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card p-3">
+                            <div class="d-flex align-items-center">
+                        <span class="stamp stamp-md bg-yellow mr-3">
+                          <i class="fe fe-message-square"></i>
+                        </span>
+                                <div>
+                                    <h4 class="m-0"><a href="javascript:void(0)">4
+                                        <small>Message</small>
+                                    </a></h4>
+                                    <small class="text-muted"></small>
+                                </div>
                             </div>
                         </div>
                     </div>
