@@ -19,4 +19,6 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
+    path('create/member/', views.create_member, name="create_member"),
+    path('create/coach/', views.create_coach, name="create_coach")
 ]
