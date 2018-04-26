@@ -78,7 +78,7 @@
         <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-lg-3 ml-auto">
+                    <div class="col-lg ml-auto">
                         <form class="input-icon my-3 my-lg-0">
                             <input type="search" class="form-control header-search" placeholder="Search&hellip;"
                                    tabindex="1">
@@ -92,48 +92,6 @@
                             <li class="nav-item">
                                 <a href="/" class="nav-link active"><i class="fe fe-home"></i> Home</a>
                             </li>
-                            <li class="nav-item">
-                                <a href="" class="nav-link" data-toggle="dropdown"><i
-                                        class="fe fe-box"></i> Operation</a>
-                                <div class="dropdown-menu dropdown-menu-arrow">
-                                    {% if user.is_superuser or user.is_staff %}
-                                        <a href="/operation" class="dropdown-item">Check-in</a>
-                                    {% endif %}
-                                    <a href="/operation/recharge" class="dropdown-item">Recharge</a>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a href="" class="nav-link" data-toggle="dropdown"><i
-                                        class="fe fe-calendar"></i> Appointment</a>
-                                <div class="dropdown-menu dropdown-menu-arrow">
-                                    <a href="/appointment" class="dropdown-item ">Record</a>
-                                    <a href="/appointment/new" class="dropdown-item ">New</a>
-                                </div>
-                            </li>
-                            {% if user.is_superuser or user.is_staff %}
-                                <li class="nav-item dropdown">
-                                    <a href="" class="nav-link" data-toggle="dropdown"><i
-                                            class="fe fe-file"></i> Report / Setting</a>
-                                    <div class="dropdown-menu dropdown-menu-arrow">
-                                        <a href="/report" class="dropdown-item ">Balance</a>
-                                    </div>
-                                </li>
-                            {% endif %}
-                            {% if user.is_superuser or user.is_staff %}
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link" data-toggle="dropdown"><i class="fe fe-file-text"></i>
-                                        Create User</a>
-                                    <div class="dropdown-menu dropdown-menu-arrow">
-                                        <a href="/create/member" class="dropdown-item ">Member</a>
-                                        <a href="/create/coach" class="dropdown-item ">Coach</a>
-                                    </div>
-                                </li>
-                            {% endif %}
-                            {% if user.is_superuser %}
-                                <li class="nav-item dropdown">
-                                    <a href="/admin" class="nav-link">Manage Page</a>
-                                </li>
-                            {% endif %}
                         </ul>
                     </div>
                 </div>
@@ -161,7 +119,7 @@
                             <div class="card-status bg-orange-light"></div>
                             <div class="card-body p-3 text-center">
                                 <div class="h1 m-0 mt-4"><i class="fa fa-inbox"></i></div>
-                                <div class="text-muted mb-4"><a href="#">Check-in</a></div>
+                                <div class="text-muted mb-4"><a href="/operation">Check-in</a></div>
                             </div>
                         </div>
                     </div>
@@ -170,7 +128,7 @@
                             <div class="card-status bg-orange-light"></div>
                             <div class="card-body p-3 text-center">
                                 <div class="h1 m-0 mt-4"><i class="fa fa-money"></i></div>
-                                <div class="text-muted mb-4"><a href="#">Recharge</a></div>
+                                <div class="text-muted mb-4"><a href="/operation/recharge">Recharge</a></div>
                             </div>
                         </div>
                     </div>
@@ -188,7 +146,7 @@
                             <div class="card-status bg-green-light"></div>
                             <div class="card-body p-3 text-center">
                                 <div class="h1 m-0 mt-4"><i class="fa fa-bars"></i></div>
-                                <div class="text-muted mb-4"><a href="#">Record</a></div>
+                                <div class="text-muted mb-4"><a href="/appointment">Record</a></div>
                             </div>
                         </div>
                     </div>
@@ -197,7 +155,7 @@
                             <div class="card-status bg-green-light"></div>
                             <div class="card-body p-3 text-center">
                                 <div class="h1 m-0 mt-4"><i class="fa fa-calendar-plus-o"></i></div>
-                                <div class="text-muted mb-4"><a href="#">New</a></div>
+                                <div class="text-muted mb-4"><a href="/appointment/new">New</a></div>
                             </div>
                         </div>
                     </div>
@@ -217,7 +175,7 @@
                             <div class="card-status bg-blue-light"></div>
                             <div class="card-body p-3 text-center">
                                 <div class="h1 m-0 mt-4"><i class="fa fa-line-chart"></i></div>
-                                <div class="text-muted mb-4"><a href="#">Balance Report</a></div>
+                                <div class="text-muted mb-4"><a href="/report">Balance Report</a></div>
                             </div>
                         </div>
                     </div>
@@ -237,7 +195,7 @@
                             <div class="card-status bg-purple-light"></div>
                             <div class="card-body p-3 text-center">
                                 <div class="h1 m-0 mt-4"><i class="fa fa-user-o"></i></div>
-                                <div class="text-muted mb-4"><a href="#">Create Member</a></div>
+                                <div class="text-muted mb-4"><a href="/create/member">Create Member</a></div>
                             </div>
                         </div>
                     </div>
@@ -246,7 +204,16 @@
                             <div class="card-status bg-purple-light"></div>
                             <div class="card-body p-3 text-center">
                                 <div class="h1 m-0 mt-4"><i class="fa fa-address-card"></i></div>
-                                <div class="text-muted mb-4"><a href="#">Create Coach</a></div>
+                                <div class="text-muted mb-4"><a href="/create/coach">Create Coach</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-4 col-lg-2">
+                        <div class="card">
+                            <div class="card-status bg-dark"></div>
+                            <div class="card-body p-3 text-center">
+                                <div class="h1 m-0 mt-4"><i class="fa fa-cog"></i></div>
+                                <div class="text-muted mb-4"><a href="/admin">Manage Page</a></div>
                             </div>
                         </div>
                     </div>
