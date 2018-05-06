@@ -6,4 +6,7 @@ from django.contrib.auth.models import User
 
 class MemberCard(models.Model):
     quota = models.IntegerField(default=0)
-    related_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    related_user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.related_user.username
