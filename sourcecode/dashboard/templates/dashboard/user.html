@@ -46,12 +46,12 @@
                             <span class="text-default">{{ user.first_name }} {{ user.last_name }}</span>
                             <small class="text-muted d-block mt-1">
                                 {% if user.is_superuser %}
-                                Developer
+                                    Developer
                                 {% else %}
                                     {% if user.is_staff %}
-                                    Staff
+                                        Staff
                                     {% else %}
-                                      Member
+                                        Member
                                     {% endif %}
                                 {% endif %}
                             </small>
@@ -97,7 +97,7 @@
                                         class="fe fe-box"></i> Operation</a>
                                 <div class="dropdown-menu dropdown-menu-arrow">
                                     {% if user.is_superuser or user.is_staff %}
-                                    <a href="/operation" class="dropdown-item">Check-in</a>
+                                        <a href="/operation" class="dropdown-item">Check-in</a>
                                     {% endif %}
                                     <a href="/operation/recharge" class="dropdown-item">Recharge</a>
                                 </div>
@@ -111,28 +111,28 @@
                                 </div>
                             </li>
                             {% if user.is_superuser or user.is_staff %}
-                            <li class="nav-item dropdown">
-                                <a href="" class="nav-link" data-toggle="dropdown"><i
-                                        class="fe fe-file"></i> Report / Setting</a>
-                                <div class="dropdown-menu dropdown-menu-arrow">
-                                    <a href="/report" class="dropdown-item ">Balance</a>
-                                </div>
-                            </li>
+                                <li class="nav-item dropdown">
+                                    <a href="" class="nav-link" data-toggle="dropdown"><i
+                                            class="fe fe-file"></i> Report / Setting</a>
+                                    <div class="dropdown-menu dropdown-menu-arrow">
+                                        <a href="/report" class="dropdown-item ">Balance</a>
+                                    </div>
+                                </li>
                             {% endif %}
                             {% if user.is_superuser or user.is_staff %}
-                            <li class="nav-item">
-                                <a href="#" class="nav-link" data-toggle="dropdown"><i class="fe fe-file-text"></i>
-                                    Create User</a>
-                                <div class="dropdown-menu dropdown-menu-arrow">
-                                    <a href="/create/member" class="dropdown-item ">Member</a>
-                                    <a href="/create/coach" class="dropdown-item ">Coach</a>
-                                </div>
-                            </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link" data-toggle="dropdown"><i class="fe fe-file-text"></i>
+                                        Create User</a>
+                                    <div class="dropdown-menu dropdown-menu-arrow">
+                                        <a href="/create/member" class="dropdown-item ">Member</a>
+                                        <a href="/create/coach" class="dropdown-item ">Coach</a>
+                                    </div>
+                                </li>
                             {% endif %}
                             {% if user.is_superuser %}
-                            <li class="nav-item dropdown">
-                                <a href="/admin" class="nav-link">Manage Page</a>
-                            </li>
+                                <li class="nav-item dropdown">
+                                    <a href="/admin" class="nav-link">Manage Page</a>
+                                </li>
                             {% endif %}
                         </ul>
                     </div>
@@ -163,27 +163,93 @@
                                     <div class="form-group">
                                         <label class="form-label">Role</label>
                                         {% if user.is_superuser %}
-                                        <div class="tag tag-purple">
-                                            Developer
-                                            <span class="tag-addon"><i class="fa fa-asterisk"></i></span>
-                                        </div>
+                                            <div class="tag tag-purple">
+                                                Developer
+                                                <span class="tag-addon"><i class="fa fa-asterisk"></i></span>
+                                            </div>
                                         {% else %}
-                                        {% if user.is_staff %}
-                                        <div class="tag tag-orange">
-                                            Staff
-                                            <span class="tag-addon"><i class="fa fa-id-card"></i></span>
-                                        </div>
-                                        {% else %}
-                                        {% endif %}
-                                        <div class="tag tag-blue">
-                                            Member
-                                            <span class="tag-addon"><i class="fa fa-user-circle"></i></span>
-                                        </div>
+                                            {% if user.is_staff %}
+                                                <div class="tag tag-orange">
+                                                    Staff
+                                                    <span class="tag-addon"><i class="fa fa-id-card"></i></span>
+                                                </div>
+                                            {% else %}
+                                            {% endif %}
+                                            <div class="tag tag-blue">
+                                                Member
+                                                <span class="tag-addon"><i class="fa fa-user-circle"></i></span>
+                                            </div>
                                         {% endif %}
                                     </div>
                                 </form>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-lg-8">
+                        {% if user_membercard %}
+                            <div class="row">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">My Member Card</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Card(Member) ID:
+                                                    <code>{{ user_membercard.id }}</code></h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="my-1">Quota Remain:
+                                                    <button type="button"
+                                                            class="btn btn-outline-success btn">{{ user_membercard.quota }}
+                                                        Time(s)
+                                                    </button>
+                                                    <a href="{% url 'operation_recharge' %}"
+                                                       class="btn btn-warning">Recharge now</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">My Workout Record</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col" style="text-align: center">#</th>
+                                                        <th scope="col" style="text-align: center">Check in time</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% if user_workout_records %}
+                                                            {% for user_workout_record in user_workout_records %}
+                                                                <tr>
+                                                                    <th style="text-align: center">{{ user_workout_record.id }}</th>
+                                                                    <th style="text-align: center">{{ user_workout_record.check_in_time }}</th>
+                                                                </tr>
+                                                            {% endfor %}
+                                                            {% else %}
+                                                            <tr>
+                                                            <th colspan="4" style="text-align: center">
+                                                                <span>No record</span>
+                                                            </th>
+                                                            </tr>
+                                                        {% endif %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
