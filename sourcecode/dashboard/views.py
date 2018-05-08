@@ -22,6 +22,9 @@ def user_info(request):
         user_membercard = models.MemberCard.objects.get(related_user_id=request.user.id)
     except ObjectDoesNotExist:
         user_membercard = None
-    user_workout = WorkoutRecord.objects.filter(related_member_card_id=user_membercard.id)
+    try:
+        user_workout = WorkoutRecord.objects.filter(related_member_card_id=user_membercard.id)
+    except (ObjectDoesNotExist, AttributeError):
+        user_workout = None
     return render(request, 'dashboard/user.html', {'user_membercard': user_membercard,
                                                    'user_workout_records': user_workout})
