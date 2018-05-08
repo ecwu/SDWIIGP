@@ -175,7 +175,7 @@
                                                 </div>
                                             </div>
                                             <div class="btn-list mt-4 text-right">
-                                                <button type="submit" class="btn btn-primary btn-space disabled" id="checkin_btn">Check-in
+                                                <button type="submit" class="btn btn-primary btn-space" disabled="disabled" id="checkin_btn">Check-in
                                                 </button>
                                             </div>
                                         </form>
@@ -259,10 +259,11 @@
                     $("#member_quota").text(data.member_quota + " Time")
                 }
                 if (data.member_quota > 0) {
-                    $("#checkin_btn").removeClass('disabled')
+                    $("#checkin_btn").removeAttr("disabled")
                 }
             },
             error: function(){
+                $("#checkin_btn").attr('disabled', 'disabled')
                 alert("Member not found")
             }
         });
