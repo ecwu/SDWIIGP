@@ -15,3 +15,8 @@ def create_coach(request):
     if not request.user.is_authenticated:
         return redirect('/')
     return render(request, 'create/coach.html')
+
+def result(request):
+    if not request.user.is_authenticated:
+        return redirect('/')
+    return render(request, 'create/result.html')
