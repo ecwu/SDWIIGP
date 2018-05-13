@@ -158,57 +158,68 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-9">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Create Coach</h3>
                             </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-label">Username</label>
-                                            <input type="text" class="form-control" name="username"
-                                                   placeholder="Username">
+                            <form action="{% url 'create_submit' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Username</label>
+                                                <input type="text" class="form-control" name="username"
+                                                       placeholder="Username" id="id_username">
+                                                <div class="invalid-feedback" id="id_username_feedback"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">First Name</label>
+                                                <input type="text" class="form-control" name="first_name"
+                                                       placeholder="Last Name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Password</label>
+                                                <input type="password" class="form-control" name="password"
+                                                       placeholder="Password" id="id_password">
+                                                <div class="invalid-feedback" id="id_password_feedback"></div>
+
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="form-label">First Name</label>
-                                            <input type="text" class="form-control" name="first_name"
-                                                   placeholder="Last Name">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Password</label>
-                                            <input type="password" class="form-control" name="password"
-                                                   placeholder="Password">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-label">email</label>
-                                            <input type="email" class="form-control" name="email"
-                                                   placeholder="Email">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Last Name</label>
-                                            <input type="text" class="form-control" name="last_name"
-                                                   placeholder="First Name">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Re-input Password</label>
-                                            <input type="password" class="form-control" name="repassword"
-                                                   placeholder="Password">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label class="form-label">email</label>
+                                                <input type="email" class="form-control" name="email"
+                                                       placeholder="Email" id="id_email">
+                                                <div class="invalid-feedback" id="id_email_feedback"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Last Name</label>
+                                                <input type="text" class="form-control" name="last_name"
+                                                       placeholder="First Name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Re-input Password</label>
+                                                <input type="password" class="form-control" name="repassword"
+                                                       placeholder="Password" id="id_re_password">
+                                                <div class="invalid-feedback" id="id_re_password_feedback"></div>
+                                            </div>
+                                            <input type="hidden" value="coach">
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card-footer text-right">
-                                <div class="d-flex">
-                                    <a href="#" class="btn btn-link">Cancel</a>
-                                    <button type="submit" class="btn btn-primary ml-auto">Submit</button>
+                                <div class="card-footer text-right">
+                                    <div class="d-flex">
+                                        <a href="/" class="btn btn-link">Cancel</a>
+                                        <button type="submit" class="btn btn-primary ml-auto">Submit</button>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -226,5 +237,95 @@
         </div>
     </footer>
 </div>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    function isEmail(email) {
+        var regex = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+        return regex.test(email);
+    }
+
+    function isPasswordValid(password) {
+        var regex = /^(?!([a-zA-Z]+|\d+)$)[a-zA-Z\d]{8,20}$/;
+        return regex.test(password)
+    }
+
+    $("#id_email").change(function () {
+        var email = $(this).val();
+        $.ajax({
+            url: '{% url 'check_email' %}',
+            data: {
+                'email': email
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.is_taken) {
+                    $("#id_email").removeClass('is-valid');
+                    $("#id_email").addClass('is-invalid');
+                    $("#id_email_feedback").text('A user with this email already exists.');
+                } else {
+                    if (isEmail($("#id_email").val())) {
+                        $("#id_email").removeClass('is-invalid');
+                        $("#id_email").addClass('is-valid');
+                        $("#id_email_feedback").text('');
+                    } else {
+                        $("#id_email").removeClass('is-valid');
+                        $("#id_email").addClass('is-invalid');
+                        $("#id_email_feedback").text('Wrong email format.');
+                    }
+                }
+            }
+        });
+    });
+
+    $("#id_username").change(function () {
+        var username = $(this).val();
+        $.ajax({
+            url: '{% url 'check_username' %}',
+            data: {
+                'username': username
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.is_taken) {
+                    $("#id_username").removeClass('is-valid');
+                    $("#id_username").addClass('is-invalid');
+                    $("#id_username_feedback").text('This username already exists.');
+                } else {
+                    if ($("#id_username").val() != '') {
+                        $("#id_username").removeClass('is-invalid');
+                        $("#id_username").addClass('is-valid');
+                        $("#id_username_feedback").text('');
+                    } else {
+                        $("#id_username").removeClass('is-valid');
+                        $("#id_username").addClass('is-invalid');
+                        $("#id_username_feedback").text('Username cannot be empty.');
+                    }
+                }
+            }
+        });
+    });
+    $("#id_password").change(function () {
+        if (isPasswordValid($("#id_password").val())) {
+            $("#id_password").removeClass('is-invalid');
+            $("#id_password").addClass('is-valid');
+            $("#id_password_label").text('');
+        } else {
+            $("#id_password").removeClass('is-valid');
+            $("#id_password").addClass('is-invalid');
+            $("#id_password_feedback").text('Wrong password format. The password length is 8-20, you need to include both numbers and letters.');
+        }
+    });
+    $("#id_re_password").change(function () {
+        if ($("#id_re_password").val() == $("#id_re_password").val()) {
+            $("#id_re_password").removeClass('is-invalid');
+            $("#id_re_password").addClass('is-valid');
+            $("#id_re_password_label").text('');
+        } else {
+            $("#id_re_password").removeClass('is-valid');
+            $("#id_re_password").addClass('is-invalid');
+            $("#id_re_password_feedback").text('Those passwords didn\'t match. Try again.');
+        }
+    });
+</script>
 </body>
 </html>
