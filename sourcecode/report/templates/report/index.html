@@ -51,7 +51,11 @@
                                   {% if user.is_staff %}
                                   Staff
                                   {% else %}
-                                    Member
+                                    {% if user.groups.all.0.name == "coach" %}
+                                          Coach
+                                      {% else %}
+                                          Member
+                                      {% endif %}
                                   {% endif %}
                               {% endif %}
                           </small>
@@ -92,6 +96,7 @@
                             <li class="nav-item">
                                 <a href="/" class="nav-link"><i class="fe fe-home"></i> Home</a>
                             </li>
+                        {% if user.groups.all.0.name != "coach" %}
                             <li class="nav-item">
                                 <a href="" class="nav-link" data-toggle="dropdown"><i
                                         class="fe fe-box"></i> Operation</a>
@@ -102,12 +107,15 @@
                                     <a href="/operation/recharge" class="dropdown-item">Recharge</a>
                                 </div>
                             </li>
+                        {% endif %}
                             <li class="nav-item dropdown">
                                 <a href="" class="nav-link" data-toggle="dropdown"><i
                                         class="fe fe-calendar"></i> Appointment</a>
                                 <div class="dropdown-menu dropdown-menu-arrow">
-                                    <a href="/appointment" class="dropdown-item ">Record</a>
-                                    <a href="/appointment/new" class="dropdown-item ">New</a>
+                                    <a href="/appointment" class="dropdown-item">Record</a>
+                                    {% if user.groups.all.0.name != "coach" %}
+                                        <a href="/appointment/new" class="dropdown-item ">New</a>
+                                    {% endif %}
                                 </div>
                             </li>
                             {% if user.is_superuser or user.is_staff %}
