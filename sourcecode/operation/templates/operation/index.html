@@ -52,7 +52,11 @@
                               {% if user.is_staff %}
                                   Staff
                               {% else %}
-                                  Member
+                                  {% if user.groups.all.0.name == "coach" %}
+                                          Coach
+                                      {% else %}
+                                          Member
+                                      {% endif %}
                               {% endif %}
                           {% endif %}
                       </small>
@@ -93,22 +97,26 @@
                             <li class="nav-item">
                                 <a href="/" class="nav-link"><i class="fe fe-home"></i> Home</a>
                             </li>
+                        {% if user.groups.all.0.name != "coach" %}
                             <li class="nav-item">
                                 <a href="" class="nav-link active" data-toggle="dropdown"><i
                                         class="fe fe-box"></i> Operation</a>
                                 <div class="dropdown-menu dropdown-menu-arrow">
                                     {% if user.is_superuser or user.is_staff %}
-                                    <a href="/operation" class="dropdown-item active">Check-in</a>
+                                    <a href="/operation" class="dropdown-item">Check-in</a>
                                     {% endif %}
                                     <a href="/operation/recharge" class="dropdown-item">Recharge</a>
                                 </div>
                             </li>
+                        {% endif %}
                             <li class="nav-item dropdown">
                                 <a href="" class="nav-link" data-toggle="dropdown"><i
                                         class="fe fe-calendar"></i> Appointment</a>
                                 <div class="dropdown-menu dropdown-menu-arrow">
-                                    <a href="/appointment" class="dropdown-item ">Record</a>
-                                    <a href="/appointment/new" class="dropdown-item ">New</a>
+                                    <a href="/appointment" class="dropdown-item active">Record</a>
+                                    {% if user.groups.all.0.name != "coach" %}
+                                        <a href="/appointment/new" class="dropdown-item ">New</a>
+                                    {% endif %}
                                 </div>
                             </li>
                             {% if user.is_superuser or user.is_staff %}
@@ -146,15 +154,19 @@
                     <div class="col-md-3">
                         <h3 class="page-title mb-5">Operation</h3>
                         <div>
-                            <div class="list-group list-group-transparent mb-0">
-                                <a href="{% url 'operation_checkin' %}"
-                                   class="list-group-item list-group-item-action d-flex align-items-center active">
-                                    <span class="icon mr-3"><i class="fa fa-inbox"></i></span>Check-in
-                                </a>
-                                <a href="{% url 'operation_recharge' %}" class="list-group-item list-group-item-action d-flex align-items-center">
-                                    <span class="icon mr-3"><i class="fa fa-money"></i></span>Recharge
-                                </a>
-                            </div>
+                            {% if user.groups.all.0.name != "coach" %}
+                                <div class="list-group list-group-transparent mb-0">
+                                    {% if user.is_superuser or user.is_staff %}
+                                        <a href="{% url 'operation_checkin' %}"
+                                           class="list-group-item list-group-item-action d-flex align-items-center active">
+                                            <span class="icon mr-3"><i class="fa fa-inbox"></i></span>Check-in
+                                        </a>
+                                        {% endif %}
+                                    <a href="{% url 'operation_recharge' %}" class="list-group-item list-group-item-action d-flex align-items-center">
+                                        <span class="icon mr-3"><i class="fa fa-money"></i></span>Recharge
+                                    </a>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-md-9">

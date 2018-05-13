@@ -51,7 +51,11 @@
                                   {% if user.is_staff %}
                                       Staff
                                   {% else %}
-                                      Member
+                                      {% if user.groups.all.0.name == "coach" %}
+                                          Coach
+                                      {% else %}
+                                          Member
+                                      {% endif %}
                                   {% endif %}
                               {% endif %}
                           </small>
@@ -105,33 +109,37 @@
                     </h1>
                 </div>
                 <div class="row row-cards">
-                    <div class="col-6 col-sm-4 col-lg-2">
-                        <div class="card">
-                            <div class="card-status bg-orange"></div>
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fe fe-box"></i></div>
-                                <div class="text-muted mb-4">Operation</div>
+                    {% if user.groups.all.0.name != "coach" %}
+                        <div class="col-6 col-sm-4 col-lg-2">
+                            <div class="card">
+                                <div class="card-status bg-orange"></div>
+                                <div class="card-body p-3 text-center">
+                                    <div class="h1 m-0 mt-4"><i class="fe fe-box"></i></div>
+                                    <div class="text-muted mb-4">Operation</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-6 col-sm-4 col-lg-2">
-                        <div class="card">
-                            <div class="card-status bg-orange-light"></div>
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fa fa-inbox"></i></div>
-                                <div class="text-muted mb-4"><a href="/operation">Check-in</a></div>
+                        {% if user.is_superuser or user.is_staff %}
+                            <div class="col-6 col-sm-4 col-lg-2">
+                                <div class="card">
+                                    <div class="card-status bg-orange-light"></div>
+                                    <div class="card-body p-3 text-center">
+                                        <div class="h1 m-0 mt-4"><i class="fa fa-inbox"></i></div>
+                                        <div class="text-muted mb-4"><a href="/operation">Check-in</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="col-6 col-sm-4 col-lg-2">
+                            <div class="card">
+                                <div class="card-status bg-orange-light"></div>
+                                <div class="card-body p-3 text-center">
+                                    <div class="h1 m-0 mt-4"><i class="fa fa-money"></i></div>
+                                    <div class="text-muted mb-4"><a href="/operation/recharge">Recharge</a></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-6 col-sm-4 col-lg-2">
-                        <div class="card">
-                            <div class="card-status bg-orange-light"></div>
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fa fa-money"></i></div>
-                                <div class="text-muted mb-4"><a href="/operation/recharge">Recharge</a></div>
-                            </div>
-                        </div>
-                    </div>
+                    {% endif %}
                     <div class="col-6 col-sm-4 col-lg-2">
                         <div class="card">
                             <div class="card-status bg-green"></div>
@@ -150,6 +158,7 @@
                             </div>
                         </div>
                     </div>
+                {% if user.groups.all.0.name != "coach" %}
                     <div class="col-6 col-sm-4 col-lg-2">
                         <div class="card">
                             <div class="card-status bg-green-light"></div>
@@ -159,65 +168,72 @@
                             </div>
                         </div>
                     </div>
+                {% endif %}
                 </div>
-                <div class="row row-cards">
-                    <div class="col-6 col-sm-4 col-lg-2">
-                        <div class="card">
-                            <div class="card-status bg-blue"></div>
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fe fe-file"></i></div>
-                                <div class="text-muted mb-4">Report</div>
+                {% if user.is_superuser or user.is_staff %}
+                    <div class="row row-cards">
+                        <div class="col-6 col-sm-4 col-lg-2">
+                            <div class="card">
+                                <div class="card-status bg-blue"></div>
+                                <div class="card-body p-3 text-center">
+                                    <div class="h1 m-0 mt-4"><i class="fe fe-file"></i></div>
+                                    <div class="text-muted mb-4">Report</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-sm-4 col-lg-2">
+                            <div class="card">
+                                <div class="card-status bg-blue-light"></div>
+                                <div class="card-body p-3 text-center">
+                                    <div class="h1 m-0 mt-4"><i class="fa fa-line-chart"></i></div>
+                                    <div class="text-muted mb-4"><a href="/report">Balance Report</a></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-sm-4 col-lg-2">
-                        <div class="card">
-                            <div class="card-status bg-blue-light"></div>
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fa fa-line-chart"></i></div>
-                                <div class="text-muted mb-4"><a href="/report">Balance Report</a></div>
+                {% endif %}
+                {% if user.is_superuser or user.is_staff %}
+                    <div class="row row-cards">
+                        <div class="col-6 col-sm-4 col-lg-2">
+
+                            <div class="card">
+                                <div class="card-status bg-purple"></div>
+                                <div class="card-body p-3 text-center">
+                                    <div class="h1 m-0 mt-4"><i class="fe fe-file-text"></i></div>
+                                    <div class="text-muted mb-4">Create</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-4 col-lg-2">
+                            <div class="card">
+                                <div class="card-status bg-purple-light"></div>
+                                <div class="card-body p-3 text-center">
+                                    <div class="h1 m-0 mt-4"><i class="fa fa-user-o"></i></div>
+                                    <div class="text-muted mb-4"><a href="/create/member">Create Member</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-4 col-lg-2">
+                            <div class="card">
+                                <div class="card-status bg-purple-light"></div>
+                                <div class="card-body p-3 text-center">
+                                    <div class="h1 m-0 mt-4"><i class="fa fa-address-card"></i></div>
+                                    <div class="text-muted mb-4"><a href="/create/coach">Create Coach</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-4 col-lg-2">
+                            <div class="card">
+                                <div class="card-status bg-dark"></div>
+                                <div class="card-body p-3 text-center">
+                                    <div class="h1 m-0 mt-4"><i class="fa fa-cog"></i></div>
+                                    <div class="text-muted mb-4"><a href="/admin">Manage Page</a></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row row-cards">
-                    <div class="col-6 col-sm-4 col-lg-2">
-                        <div class="card">
-                            <div class="card-status bg-purple"></div>
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fe fe-file-text"></i></div>
-                                <div class="text-muted mb-4">Create</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-4 col-lg-2">
-                        <div class="card">
-                            <div class="card-status bg-purple-light"></div>
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fa fa-user-o"></i></div>
-                                <div class="text-muted mb-4"><a href="/create/member">Create Member</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-4 col-lg-2">
-                        <div class="card">
-                            <div class="card-status bg-purple-light"></div>
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fa fa-address-card"></i></div>
-                                <div class="text-muted mb-4"><a href="/create/coach">Create Coach</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-4 col-lg-2">
-                        <div class="card">
-                            <div class="card-status bg-dark"></div>
-                            <div class="card-body p-3 text-center">
-                                <div class="h1 m-0 mt-4"><i class="fa fa-cog"></i></div>
-                                <div class="text-muted mb-4"><a href="/admin">Manage Page</a></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endif %}
             </div>
         </div>
     </div>
