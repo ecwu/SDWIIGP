@@ -21,6 +21,7 @@ from . import views
 urlpatterns = [
     path('operation/', views.operation_checkin, name="operation_checkin"),
     path('operation/recharge/', views.operation_recharge, name="operation_recharge"),
+    path('operation/recharge/submit/', views.get_recharge, name="getrecharge"),
     path('operation/member-info/', views.pull_member_card_information, name="pull_info"),
     path('operation/member-check/', views.check_in_member, name="checkin_member")
 ]

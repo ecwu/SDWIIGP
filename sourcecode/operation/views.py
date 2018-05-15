@@ -22,6 +22,24 @@ def operation_recharge(request):
     padding_request = RechargeLog.objects.filter(is_valid=False)
     return render(request, 'operation/recharge.html', {'PaddingRequest': padding_request})
 
+def get_recharge(request):
+    if not request.user.is_authenticated:
+        return redirect('/')
+    recharge_card = request.POST.get('member_id')
+    recharge_quota = request.POST.get('recharge_quota')
+    recharge_method = request.POST.get('method')
+    membercard_object = MemberCard.objects.get(pk=recharge_card)
+    if recharge_method == "wechat":
+        db_method="WECHATPAY"
+    else:
+        db_method = "ALIPAY"
+
+    RechargeLog.objects.create(
+        related_member_card=membercard_object,
+        quota=recharge_quota,
+        recharge_method=db_method
+    )
+    return redirect('/operation/recharge')
 
 def check_in_member(request):
     if not request.user.is_authenticated:

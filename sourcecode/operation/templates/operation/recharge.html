@@ -31,6 +31,7 @@
 </head>
 <body class="">
 <div class="page">
+
     <div class="page-main">
         <div class="header py-4">
             <div class="container">
@@ -175,7 +176,8 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <form action="">
+                                        <form action="{% url 'getrecharge' %}" method="POST" id="recharge_form">
+                                            {% csrf_token %}
                                             <div class="form-group">
                                                 <div class="row align-items-center">
                                                     <div class="col">
@@ -342,7 +344,7 @@
                 </div>
                 <div class="modal-footer">
                     <a href="#" onclick="location.reload();" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
-                    <button type="button" class="btn btn-success">Finish</button>
+                    <input onclick="$('#recharge_form').submit()" type="submit" class="btn btn-success" value="Finish" id="finalSubmit"/>
                 </div>
             </div>
         </div>
@@ -419,9 +421,9 @@
         $("#com_qr").html('<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='
             + "Please Transfer " + $("#recharge_quota").val()*20 + " RMB using " + $("input[name=method]:checked").val() + '.">');
         $("#com_price").text($("#recharge_quota").val() * 20);
-        $("#com_method").text($('input[name=method]:checked').val())
+        $("#com_method").text($('input[name=method]:checked').val());
         startTimer()
-    })
+    });
 
     function startTimer(){
         var time = 120;
