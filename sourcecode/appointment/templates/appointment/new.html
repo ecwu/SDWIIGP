@@ -98,7 +98,7 @@
                             </li>
                         {% if user.groups.all.0.name != "coach" %}
                             <li class="nav-item">
-                                <a href="" class="nav-link active" data-toggle="dropdown"><i
+                                <a href="" class="nav-link" data-toggle="dropdown"><i
                                         class="fe fe-box"></i> Operation</a>
                                 <div class="dropdown-menu dropdown-menu-arrow">
                                     {% if user.is_superuser or user.is_staff %}
@@ -109,7 +109,7 @@
                             </li>
                         {% endif %}
                             <li class="nav-item dropdown">
-                                <a href="" class="nav-link" data-toggle="dropdown"><i
+                                <a href="" class="nav-link active" data-toggle="dropdown"><i
                                         class="fe fe-calendar"></i> Appointment</a>
                                 <div class="dropdown-menu dropdown-menu-arrow">
                                     <a href="/appointment" class="dropdown-item">Record</a>

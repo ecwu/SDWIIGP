@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Report - Gym management system</title>
+    <!-- font-awesome icon set core -->
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
+    <!-- load static files -->
+    <script src="{% static 'js/require.min.js' %}"></script>
+    <script>
+        requirejs.config({
+            baseUrl: '/'
+        });
+    </script>
+    <!-- Dashboard Core -->
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet"/>
+    <script src="{% static 'js/dashboard.js' %}"></script>
+    <!-- c3.js Charts Plugin -->
+    <link href="{% static 'plugins/charts-c3/plugin.css' %}" rel="stylesheet"/>
+    <script src="{% static 'plugins/charts-c3/plugin.js' %}"></script>
+    <!-- Google Maps Plugin -->
+    <link href="{% static 'plugins/maps-google/plugin.css' %}" rel="stylesheet"/>
+    <script src="{% static 'plugins/maps-google/plugin.js' %}"></script>
+    <!-- Input Mask Plugin -->
+    <script src="{% static 'plugins/input-mask/plugin.js' %}"></script>
+</head>
+<body>
+<div class="page">
+    <div class="page-main">
+        <div class="header py-4">
+            <div class="container">
+                <div class="d-flex">
+                    <a class="header-brand" href="/">
+                        <img src="{% static 'img/logo_black.svg' %}" class="header-brand-img" alt="tabler logo">
+                    </a>
+                    <div class="d-flex order-lg-2 ml-auto">
+                        <div class="dropdown">
+                            <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
+                                <span class="avatar">{{ user.first_name|first }}{{ user.last_name|first }}</span>
+                                <span class="ml-2 d-none d-lg-block">
+                          <span class="text-default">{{ user.first_name }} {{ user.last_name }}</span>
+                          <small class="text-muted d-block mt-1">
+                              {% if user.is_superuser %}
+                                  Developer
+                              {% else %}
+                                  {% if user.is_staff %}
+                                      Staff
+                                  {% else %}
+                                      {% if user.groups.all.0.name == "coach" %}
+                                          Coach
+                                      {% else %}
+                                          Member
+                                      {% endif %}
+                                  {% endif %}
+                              {% endif %}
+                          </small>
+                        </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" href="{% url 'user_info' %}">
+                                    <i class="dropdown-icon fe fe-user"></i> Profile
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{% url 'logout' %}">
+                                    <i class="dropdown-icon fe fe-log-out"></i> Sign out
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="header-toggler d-lg-none ml-3 ml-lg-0" data-toggle="collapse"
+                       data-target="#headerMenuCollapse">
+                        <span class="header-toggler-icon"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 ml-auto">
+                    </div>
+                    <div class="col-lg order-lg-first">
+                        <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
+                            <li class="nav-item">
+                                <a href="/" class="nav-link"><i class="fe fe-home"></i> Home</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="my-3 my-md-5">
+            <div class="container">
+                <div>
+                    <form class="input-icon my-3 my-lg-0" method="get" action="/search/">
+                        <input type="search" class="form-control header-search" placeholder="Search&hellip;"
+                               tabindex="1" name="search_key">
+                        <div class="input-icon-addon">
+                            <i class="fe fe-search"></i>
+                        </div>
+                    </form>
+                </div>
+                <div class="page-header">
+                    <h1 class="page-title">
+                        Results related to: <code>{{ search_key }}</code>
+                    </h1>
+                </div>
+                <div>
+                    {% if number_query_user %}
+                        <div>
+                            {% for post in number_query_user %}
+                                <div class="card">
+                                    <div class="card-status bg-blue"></div>
+                                    <div class="card-header">
+                                        <h3 class="card-title">User Related:</h3>
+                                        <div class="card-options">
+                                            <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
+                                                    class="fe fe-chevron-up"></i></a>
+                                            <a href="#" class="card-options-remove" data-toggle="card-remove"><i
+                                                    class="fe fe-x"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div>Member Name: {{ post.username }}</div>
+                                        <div>User Email: {{ post.email }}</div>
+                                        <div>User ID: {{ post.id }}</div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if member_card_owner %}
+                        {% for member in member_card_owner %}
+                            <div class="card">
+                                <div class="card-status bg-teal"></div>
+                                <div class="card-header">
+                                    <h3 class="card-title">Member Card Related:</h3>
+                                    <div class="card-options">
+                                        <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
+                                                class="fe fe-chevron-up"></i></a>
+                                        <a href="#" class="card-options-remove" data-toggle="card-remove"><i
+                                                class="fe fe-x"></i></a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div>Related User: {{ member.related_user }}</div>
+                                    <div>Quota: {{ member.quota }}</div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% if string_query_user %}
+                        <div>
+                            {% for post in string_query_user %}
+                                <div class="card">
+                                    <div class="card-status bg-yellow"></div>
+                                    <div class="card-header">
+                                        <h3 class="card-title">User Related:</h3>
+                                        <div class="card-options">
+                                            <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
+                                                    class="fe fe-chevron-up"></i></a>
+                                            <a href="#" class="card-options-remove" data-toggle="card-remove"><i
+                                                    class="fe fe-x"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div>Member Name: {{ post.username }}</div>
+                                        <div>User Email: {{ post.email }}</div>
+                                        <div>User ID: {{ post.id }}</div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-auto ml-lg-auto">
+                    By: Jack Wu & Lennox Xie
+                </div>
+                <div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
+                    Copyright © 2018 GMS Development Group - All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
