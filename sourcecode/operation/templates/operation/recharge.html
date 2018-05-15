@@ -180,25 +180,27 @@
                                                 <div class="row align-items-center">
                                                     <div class="col">
                                                         <input type="text" placeholder="Member ID"
-                                                               class="form-control mb-3">
+                                                               class="form-control mb-3" id="member_id"
+                                                               name="member_id">
                                                     </div>
                                                 </div>
                                                 <div class="row align-items-center">
                                                     <div class="col">
-                                                        <input type="text" placeholder="Recharge Quota"
-                                                               class="form-control mb-3">
+                                                        <input type="number" placeholder="Recharge Quota"
+                                                               class="form-control mb-3" id="recharge_quota"
+                                                               name="recharge_quota" min="1">
                                                     </div>
                                                 </div>
                                                 <div class="row align-items-center">
                                                     <div class="col">
                                                         <div class="selectgroup w-100">
                                                             <label class="selectgroup-item">
-                                                                <input type="radio" name="value" value="50"
+                                                                <input type="radio" name="method" value="wechat"
                                                                        class="selectgroup-input" checked="">
                                                                 <span class="selectgroup-button">Wechat</span>
                                                             </label>
                                                             <label class="selectgroup-item">
-                                                                <input type="radio" name="value" value="100"
+                                                                <input type="radio" name="method" value="alipay"
                                                                        class="selectgroup-input">
                                                                 <span class="selectgroup-button">Alipay</span>
                                                             </label>
@@ -207,8 +209,12 @@
                                                 </div>
                                             </div>
                                             <div class="btn-list mt-4 text-right">
+                                                <button type="button" class="btn btn-warning btn-space"
+                                                        id="verified_info">Verified
+                                                </button>
                                                 <button type="button" class="btn btn-primary btn-space"
-                                                        data-toggle="modal" data-target="#exampleModal">Submit
+                                                        data-toggle="modal" id="pop_btn" disabled="disabled"
+                                                        data-target="#exampleModal">Submit
                                                 </button>
                                             </div>
                                         </form>
@@ -223,25 +229,26 @@
                                             </div>
                                             <div class="card-body">
                                                 <div class="d-flex justify-content-center"><span
-                                                        class="avatar avatar-xxl avatar-gray-dark">LX</span></div>
+                                                        class="avatar avatar-xxl avatar-gray-dark"
+                                                        id="member_name_abbr">--</span></div>
                                                 <div class="d-flex justify-content-center" style="padding-top: 1rem;">
-                                                    <h3>Lennox Xie</h3>
+                                                    <h3 id="member_name">N/A</h3>
                                                 </div>
                                                 <div class="d-flex justify-content-center" style="padding-top: 1rem;">
                                                     <div class="tag tag-danger">
                                                         Joined
-                                                        <span class="tag-addon">537 Days</span>
+                                                        <span class="tag-addon" id="member_join">-- Days</span>
                                                     </div>
                                                 </div>
                                                 <div class="d-flex justify-content-md-around"
                                                      style="padding-top: 1rem;">
                                                     <div class="tag tag-success">
                                                         Quota
-                                                        <span class="tag-addon">4 Times</span>
+                                                        <span class="tag-addon" id="member_quota">- Times</span>
                                                     </div>
                                                     <div class="tag tag-info">
                                                         Appointment
-                                                        <span class="tag-addon">0</span>
+                                                        <span class="tag-addon">--</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -250,6 +257,7 @@
                                 </div>
                             </div>
                         </div>
+                    {% if user.is_staff %}
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Payment Verify</h3>
@@ -263,16 +271,21 @@
                                                 <tr>
                                                     <th scope="col">#</th>
                                                     <th scope="col">Quota</th>
-                                                    <th scope="col">Price</th>
                                                     <th scope="col">Method</th>
+                                                    <th scope="col">Time</th>
                                                     <th scope="col">Operation</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr>
-                                                    <th colspan="5" style="text-align: center"><span>No record</span>
-                                                    </th>
-                                                </tr>
+                                                    {% for request in PaddingRequest %}
+                                                        <tr>
+                                                            <th scope="col">{{ request.id }}</th>
+                                                            <th scope="col">{{ request.quota }}</th>
+                                                            <th scope="col">{{ request.recharge_method }}</th>
+                                                            <th scope="col">{{ request.recharge_time }}</th>
+                                                            <th scope="col"><a class="btn btn-sm btn-danger" href="#">Invoke</a></th>
+                                                        </tr>
+                                                    {% endfor %}
                                                 </tbody>
                                             </table>
                                         </div>
@@ -280,6 +293,7 @@
                                 </div>
                             </div>
                         </div>
+                    {% endif %}
                     </div>
                 </div>
             </div>
@@ -290,15 +304,44 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Please Finish the payment within <span id="countdown">120s</span></h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Please Finish the payment</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-label">Member</label>
+                                <div class="form-control-plaintext" id="com_name">--</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Recharge Quota</label>
+                                <div class="form-control-plaintext" id="com_quota">-</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Total Price</label>
+                                <div class="form-control-plaintext" id="com_price">--</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Remain time</label>
+                                <div class="form-control-plaintext"><span class="h2" id="com_rest"></span></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="form-label">Recharge Method</label>
+                                <div class="form-control-plaintext" id="com_method">--</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">QR Code</label>
+                                <div class="form-control-plaintext" id="com_qr"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <a href="#" onclick="location.reload();" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
                     <button type="button" class="btn btn-success">Finish</button>
                 </div>
             </div>
@@ -317,5 +360,83 @@
         </div>
     </footer>
 </div>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    $("#recharge_quota").change(function () {
+        if ($(this).val() <= 0) {
+            $(this).val(1);
+            alert("Value should greater than 0")
+        }
+    });
+
+    $("#verified_info").click(function () {
+        if ($("#member_id").val() === "") {
+            alert("Member ID cannot be empty")
+        } else if ($("#recharge_quota").val() === "") {
+            alert("Value should greater than 0");
+            $("#recharge_quota").val(1)
+        } else {
+            alert("All information is correct!, please submit");
+            $("#pop_btn").removeAttr("disabled")
+        }
+    })
+
+    $("#member_id").change(function () {
+        var memberID = $(this).val();
+        $.ajax({
+            url: '{% url 'pull_info' %}',
+            data: {
+                'memberID': memberID
+            },
+            dataType: 'json',
+            success: function (data) {
+                $("#member_name").text(data.member_name);
+                $("#com_name").text(data.member_name);
+                $("#member_name_abbr").text(data.member_name_abbr);
+                if (data.member_join > 1) {
+                    $("#member_join").text(data.member_join + " Days");
+                } else {
+                    $("#member_join").text(data.member_join + " Day");
+                }
+                if (data.member_quota > 1) {
+                    $("#member_quota").text(data.member_quota + " Times")
+                } else {
+                    $("#member_quota").text(data.member_quota + " Time")
+                }
+                if (data.member_quota > 0) {
+                    $("#checkin_btn").removeAttr("disabled")
+                }
+            },
+            error: function () {
+                $("#checkin_btn").attr('disabled', 'disabled')
+                alert("Member not found")
+            }
+        });
+    });
+
+    $("#pop_btn").click(function () {
+        $("#com_quota").text($("#recharge_quota").val());
+        $("#com_qr").html('<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='
+            + "Please Transfer " + $("#recharge_quota").val()*20 + " RMB using " + $("input[name=method]:checked").val() + '.">');
+        $("#com_price").text($("#recharge_quota").val() * 20);
+        $("#com_method").text($('input[name=method]:checked').val())
+        startTimer()
+    })
+
+    function startTimer(){
+        var time = 120;
+
+        var countdown = setInterval(function () {
+            $("#com_rest").text(time + "s");
+            if (time > 0) {
+                time--;
+            }else{
+                clearInterval(countdown)
+                location.reload();
+            }
+        }, 1000);
+    }
+</script>
+
 </body>
 </html>

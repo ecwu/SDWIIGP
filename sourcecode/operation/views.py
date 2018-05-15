@@ -7,7 +7,7 @@ from django.utils.dateformat import format
 
 from datetime import *
 
-from .models import MemberCard, WorkoutRecord
+from .models import MemberCard, WorkoutRecord, RechargeLog
 
 
 def operation_checkin(request):
@@ -19,7 +19,8 @@ def operation_checkin(request):
 def operation_recharge(request):
     if not request.user.is_authenticated:
         return redirect('/')
-    return render(request, 'operation/recharge.html')
+    padding_request = RechargeLog.objects.filter(is_valid=False)
+    return render(request, 'operation/recharge.html', {'PaddingRequest': padding_request})
 
 
 def check_in_member(request):
