@@ -176,22 +176,23 @@
                                         <div class="form-group">
                                             <label class="form-label">Coach</label>
                                             <select class="form-control custom-select">
-                                                <option value="">Muscle Man</option>
+                                                {% for c in coach %}
+                                                <option value="{{ c.id }}">{{ c.first_name }} {{ c.last_name }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label class="form-label">Date</label>
-                                                    <input type="text" name="field-name" class="form-control"
-                                                           data-mask="00/00/0000" data-mask-clearifnotmatch="true"
-                                                           placeholder="00/00/0000" autocomplete="off" maxlength="10">
+                                                    <input type="date" name="field-name" class="form-control"
+                                                           data-mask-clearifnotmatch="true" autocomplete="off" maxlength="10">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label class="form-label">Hour</label>
-                                                    <input type="text" name="field-name" class="form-control"
+                                                    <input type="time" name="field-name" class="form-control"
                                                            data-mask="00:00:00" data-mask-clearifnotmatch="true"
                                                            placeholder="00:00:00" autocomplete="off" maxlength="8">
                                                 </div>

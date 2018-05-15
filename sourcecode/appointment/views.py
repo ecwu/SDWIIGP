@@ -14,4 +14,5 @@ def exist_appointment(request):
 def new_appointment(request):
     if not request.user.is_authenticated:
         return redirect('/')
-    return render(request, 'appointment/new.html')
+    Coach = User.objects.filter(groups__name='coach')
+    return render(request, 'appointment/new.html', {'coach': Coach})
