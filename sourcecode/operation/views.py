@@ -22,6 +22,7 @@ def operation_recharge(request):
     padding_request = RechargeLog.objects.filter(is_valid=False)
     return render(request, 'operation/recharge.html', {'PaddingRequest': padding_request})
 
+
 def get_recharge(request):
     if not request.user.is_authenticated:
         return redirect('/')
@@ -40,6 +41,29 @@ def get_recharge(request):
         recharge_method=db_method
     )
     return redirect('/operation/recharge')
+
+
+def recharge_invoke(request, recharge_id):
+    if not (request.user.is_superuser or request.user.is_staff):
+        return redirect('/')
+    RechargeLog.objects.filter(pk=recharge_id).delete()
+    return redirect('/operation/recharge/')
+
+
+def recharge_accept(request, recharge_id):
+    if not (request.user.is_superuser or request.user.is_staff):
+        return redirect('/')
+    recharge = RechargeLog.objects.get(pk=recharge_id)
+    quota = recharge.quota
+
+    recharge.related_member_card.quota += quota
+    recharge.related_member_card.save()
+
+    recharge.is_valid = True
+    recharge.save()
+
+    return redirect('/operation/recharge/')
+
 
 def check_in_member(request):
     if not request.user.is_authenticated:

@@ -22,6 +22,8 @@ urlpatterns = [
     path('operation/', views.operation_checkin, name="operation_checkin"),
     path('operation/recharge/', views.operation_recharge, name="operation_recharge"),
     path('operation/recharge/submit/', views.get_recharge, name="getrecharge"),
+    path('operation/recharge/invoke/<int:recharge_id>', views.recharge_invoke, name="invoke_recharge"),
+    path('operation/recharge/accept/<int:recharge_id>', views.recharge_accept, name="accept_recharge"),
     path('operation/member-info/', views.pull_member_card_information, name="pull_info"),
     path('operation/member-check/', views.check_in_member, name="checkin_member")
 ]

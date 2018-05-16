@@ -319,7 +319,10 @@
                                                             <th scope="col">{{ request.quota }}</th>
                                                             <th scope="col">{{ request.recharge_method }}</th>
                                                             <th scope="col">{{ request.recharge_time }}</th>
-                                                            <th scope="col"><a class="btn btn-sm btn-danger" href="#">Invoke</a></th>
+                                                            <th scope="col">
+                                                                <a class="btn btn-sm btn-danger" href="{% url 'invoke_recharge' request.id %}">Invoke</a>
+                                                                <a class="btn btn-sm btn-success" href="{% url 'accept_recharge' request.id %}">Accept</a>
+                                                            </th>
                                                         </tr>
                                                     {% endfor %}
                                                 </tbody>
