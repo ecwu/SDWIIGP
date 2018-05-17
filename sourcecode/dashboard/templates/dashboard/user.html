@@ -79,9 +79,9 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-3 ml-auto">
-                        <form class="input-icon my-3 my-lg-0">
+                        <form class="input-icon my-3 my-lg-0" method="get" action="/search">
                             <input type="search" class="form-control header-search" placeholder="Search&hellip;"
-                                   tabindex="1">
+                                   tabindex="1" name="search_key">
                             <div class="input-icon-addon">
                                 <i class="fe fe-search"></i>
                             </div>
@@ -92,9 +92,11 @@
                             <li class="nav-item">
                                 <a href="/" class="nav-link"><i class="fe fe-home"></i> Home</a>
                             </li>
-                            <li class="nav-item">
-                                <a href="" class="nav-link" data-toggle="dropdown"><i
+                            {% if user.groups.all.0.name != "coach" %}
+                                <li class="nav-item">
+                                    <a href="" class="nav-link" data-toggle="dropdown"><i
                                         class="fe fe-box"></i> Operation</a>
+                            {% endif %}
                                 <div class="dropdown-menu dropdown-menu-arrow">
                                     {% if user.is_superuser or user.is_staff %}
                                         <a href="/operation" class="dropdown-item">Check-in</a>
@@ -107,7 +109,9 @@
                                         class="fe fe-calendar"></i> Appointment</a>
                                 <div class="dropdown-menu dropdown-menu-arrow">
                                     <a href="/appointment" class="dropdown-item ">Record</a>
-                                    <a href="/appointment/new" class="dropdown-item ">New</a>
+                                    {% if user.groups.all.0.name != "coach" %}
+                                        <a href="/appointment/new" class="dropdown-item ">New</a>
+                                    {% endif %}
                                 </div>
                             </li>
                             {% if user.is_superuser or user.is_staff %}
