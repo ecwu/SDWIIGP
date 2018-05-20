@@ -202,15 +202,26 @@
                                             <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Appointment time</th>
+                                                <th scope="col">Member</th>
                                                 <th scope="col">Coach</th>
-                                                <th scope="col">Status</th>
+                                                <th scope="col">Appointment time</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <th colspan="4" style="text-align: center"><span>No record</span></th>
-                                            </tr>
+                                            {% if records %}
+                                                {% for record in records %}
+                                                <tr>
+                                                    <td>{{ record.id }}</td>
+                                                    <td>{{ record.appointer }}</td>
+                                                    <td>{{ record.appointee }}</td>
+                                                    <td>{{ record.appoint_time_date }} {{ record.appoint_time_hour }}:00</td>
+                                                </tr>
+                                                {% endfor %}
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="4" style="text-align: center"><span>No record</span></td>
+                                                </tr>
+                                            {% endif %}
                                             </tbody>
                                         </table>
                                     </div>
