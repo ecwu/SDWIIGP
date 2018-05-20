@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from . import models
+from django.contrib import messages
 
 from operation.models import WorkoutRecord
 # Create your views here.
@@ -11,12 +12,14 @@ from operation.models import WorkoutRecord
 
 def dashboard(request):
     if not request.user.is_authenticated:
+        messages.add_message(request, messages.ERROR, 'Login required.')
         return redirect('/')
     return render(request, 'dashboard/index.html')
 
 
 def user_info(request):
     if not request.user.is_authenticated:
+        messages.add_message(request, messages.ERROR, 'Login required.')
         return redirect('/')
     try:
         user_membercard = models.MemberCard.objects.get(related_user_id=request.user.id)

@@ -4,23 +4,28 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import Group
+from django.contrib import messages
 
 from dashboard.models import MemberCard
 
 
 def create_member(request):
-    if not request.user.is_authenticated:
+    if not (request.user.is_superuser or request.user.is_staff):
+        messages.add_message(request, messages.ERROR, 'No Permission.')
         return redirect('/')
     return render(request, 'create/member.html')
 
 
 def create_coach(request):
-    if not request.user.is_authenticated:
+    if not (request.user.is_superuser or request.user.is_staff):
+        messages.add_message(request, messages.ERROR, 'No Permission.')
         return redirect('/')
     return render(request, 'create/coach.html')
 
+
 def submit(request):
-    if not request.user.is_authenticated:
+    if not (request.user.is_superuser or request.user.is_staff):
+        messages.add_message(request, messages.ERROR, 'No Permission.')
         return redirect('/')
     username = request.POST.get('username')
     email = request.POST.get('email')
@@ -37,14 +42,18 @@ def submit(request):
         last_name=last_name,
     )
 
+    messages.add_message(request, messages.SUCCESS, 'The user has been created.')
+
     if role == 'member':
-       MemberCard.objects.create(
-           related_user=user
-       )
+        new_membercard = MemberCard.objects.create(
+            related_user=user
+        )
+        messages.add_message(request, messages.INFO, 'User\'s Member Card Number: ' + str(new_membercard.id) + '.')
     elif role == 'coach':
         coach_group = Group.objects.get(name='coach')
         user.groups.add(coach_group)
     return render(request, 'create/result.html', {'created': user, 'created_role': role})
+
 
 def check_username(request):
     username = request.GET.get('username')
@@ -52,6 +61,7 @@ def check_username(request):
         'is_taken': User.objects.filter(username__exact=username).exists()
     }
     return JsonResponse(data)
+
 
 def check_email(request):
     email = request.GET.get('email')

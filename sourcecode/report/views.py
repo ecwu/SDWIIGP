@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import messages
+
 from . import models
 
 from dashboard.models import MemberCard
@@ -11,6 +13,7 @@ from operation.models import WorkoutRecord, RechargeLog
 
 def report(request):
     if not (request.user.is_authenticated and request.user.is_staff):
+        messages.add_message(request, messages.ERROR, 'No Permission.')
         return redirect('/')
     Member = MemberCard.objects.all()
     Coach = User.objects.filter(groups__name='coach')

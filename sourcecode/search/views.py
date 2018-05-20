@@ -3,12 +3,14 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import messages
 
 from dashboard.models import MemberCard
 
 
 def search(request):
     if not request.user.is_authenticated:
+        messages.add_message(request, messages.ERROR, 'Login required.')
         return redirect('/')
     number_query_user = None
     search_key = None
