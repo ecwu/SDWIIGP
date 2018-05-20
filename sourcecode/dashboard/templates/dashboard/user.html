@@ -94,15 +94,15 @@
                             </li>
                             {% if user.groups.all.0.name != "coach" %}
                                 <li class="nav-item">
-                                    <a href="" class="nav-link" data-toggle="dropdown"><i
+                                <a href="" class="nav-link" data-toggle="dropdown"><i
                                         class="fe fe-box"></i> Operation</a>
                             {% endif %}
-                                <div class="dropdown-menu dropdown-menu-arrow">
-                                    {% if user.is_superuser or user.is_staff %}
-                                        <a href="/operation" class="dropdown-item">Check-in</a>
-                                    {% endif %}
-                                    <a href="/operation/recharge" class="dropdown-item">Recharge</a>
-                                </div>
+                            <div class="dropdown-menu dropdown-menu-arrow">
+                                {% if user.is_superuser or user.is_staff %}
+                                    <a href="/operation" class="dropdown-item">Check-in</a>
+                                {% endif %}
+                                <a href="/operation/recharge" class="dropdown-item">Recharge</a>
+                            </div>
                             </li>
                             <li class="nav-item dropdown">
                                 <a href="" class="nav-link" data-toggle="dropdown"><i
@@ -177,12 +177,20 @@
                                                     Staff
                                                     <span class="tag-addon"><i class="fa fa-id-card"></i></span>
                                                 </div>
+
                                             {% else %}
+                                                {% if user.groups.all.0.name == "coach" %}
+                                                    <div class="tag tag-blue">
+                                                        Coach
+                                                        <span class="tag-addon"><i class="fa fa-hand-rock-o"></i></span>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="tag tag-blue">
+                                                        Member
+                                                        <span class="tag-addon"><i class="fa fa-user-circle"></i></span>
+                                                    </div>
+                                                {% endif %}
                                             {% endif %}
-                                            <div class="tag tag-blue">
-                                                Member
-                                                <span class="tag-addon"><i class="fa fa-user-circle"></i></span>
-                                            </div>
                                         {% endif %}
                                     </div>
                                 </form>
@@ -232,20 +240,20 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {% if user_workout_records %}
-                                                            {% for user_workout_record in user_workout_records %}
-                                                                <tr>
-                                                                    <th style="text-align: center">{{ user_workout_record.id }}</th>
-                                                                    <th style="text-align: center">{{ user_workout_record.check_in_time }}</th>
-                                                                </tr>
-                                                            {% endfor %}
-                                                            {% else %}
+                                                    {% if user_workout_records %}
+                                                        {% for user_workout_record in user_workout_records %}
                                                             <tr>
+                                                                <th style="text-align: center">{{ user_workout_record.id }}</th>
+                                                                <th style="text-align: center">{{ user_workout_record.check_in_time }}</th>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <tr>
                                                             <th colspan="4" style="text-align: center">
                                                                 <span>No record</span>
                                                             </th>
-                                                            </tr>
-                                                        {% endif %}
+                                                        </tr>
+                                                    {% endif %}
                                                     </tbody>
                                                 </table>
                                             </div>
