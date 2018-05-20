@@ -20,7 +20,9 @@ def report(request):
     Workout = WorkoutRecord.objects.all()
     Recharge = RechargeLog.objects.all()
     Recharge_waiting = RechargeLog.objects.filter(is_valid=False)
-    Recharge_balance = len(Recharge) * 20
+    Recharge_balance = 0
+    for recharge_payment in Recharge:
+        Recharge_balance += int(recharge_payment.quota) * 20
     return render(request, 'report/index.html', {'member': Member,
                                                  'coach': Coach,
                                                  'workout': Workout,
