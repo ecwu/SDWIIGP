@@ -34,4 +34,17 @@ def new_appointment(request):
         messages.add_message(request, messages.WARNING,
                              'This account have no Member Card . You cannot make appointments.')
     Coach = User.objects.filter(groups__name='coach')
-    return render(request, 'appointment/new.html', {'coach': Coach})
+    try:
+        usermembercard = MemberCard.objects.get(related_user=request.user)
+    except ObjectDoesNotExist:
+        usermembercard = None
+    return render(request, 'appointment/new.html', {'coach': Coach, 'usermembercard': usermembercard})
+
+
+def check_coach_time(request):
+    if request.user.is_authenticated:
+        coach_name = request.GET.get('coach_name')
+        select_date = request.GET.get('select_date')
+        select_hour = request.GET.get('select_hour')
+    pass
+

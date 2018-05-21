@@ -195,34 +195,45 @@
                                         <h3 class="card-title">New Appointment</h3>
                                     </div>
                                     <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <label class="form-label">Coach</label>
-                                                    <select class="form-control custom-select">
-                                                        {% for c in coach %}
-                                                            <option value="{{ c.id }}">{{ c.first_name }} {{ c.last_name }}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-lg-6">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col">
+                                                    {% if usermembercard %}
                                                         <div class="form-group">
-                                                            <label class="form-label">Date</label>
-                                                            <input type="date" name="field-name" class="form-control"
-                                                                   data-mask-clearifnotmatch="true" autocomplete="off"
-                                                                   maxlength="10">
+                                                            <label class="form-label">Your Member Card Number</label>
+                                                            <div class="form-control-plaintext">
+                                                                <code>{{ usermembercard.id }}</code></div>
                                                         </div>
+                                                    {% endif %}
+                                                    <div class="form-group">
+                                                        <label class="form-label">Coach</label>
+                                                        <select class="form-control custom-select" id="coach_name">
+                                                            {% for c in coach %}
+                                                                <option value="{{ c.id }}">{{ c.first_name }} {{ c.last_name }}</option>
+                                                            {% endfor %}
+                                                        </select>
                                                     </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="form-group">
-                                                            <label class="form-label">Hour (9:00 - 12:00 & 14:00 - 21:00)</label>
-                                                            <input type="number" placeholder="XX:00" name="field-name" class="form-control">
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Date</label>
+                                                                <input type="date" name="select_date"
+                                                                       class="form-control" id="select_date">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Hour (Please input number
+                                                                    number: 9 - 12 & 14 - 21)</label>
+                                                                <input type="number" placeholder="XX:00"
+                                                                       name="select_hour" class="form-control"
+                                                                       id="select_hour">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
                                     <div class="card-footer text-right">
                                         <div class="d-flex">
@@ -252,5 +263,38 @@
                     </div>
                 </footer>
             </div>
+            <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+            {% comment %}<script>
+                $("#select_date").change(function () {
+                    if ($("#select_hour").val() !== "") {
+                        var date = $(this).val();
+                        var hour = $("#select_hour").val();
+                    $.ajax({
+                        url: '{% url 'check_email' %}',
+                        data: {
+                            'email': email
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.is_taken) {
+                                $("#id_email").removeClass('is-valid');
+                                $("#id_email").addClass('is-invalid');
+                                $("#id_email_feedback").text('A user with this email already exists.');
+                            } else {
+                                if (isEmail($("#id_email").val())) {
+                                    $("#id_email").removeClass('is-invalid');
+                                    $("#id_email").addClass('is-valid');
+                                    $("#id_email_feedback").text('');
+                                } else {
+                                    $("#id_email").removeClass('is-valid');
+                                    $("#id_email").addClass('is-invalid');
+                                    $("#id_email_feedback").text('Wrong email format.');
+                                }
+                            }
+                        }
+                    });
+                    }
+                });
+            </script>{% endcomment %}
 </body>
 </html>
