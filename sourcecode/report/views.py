@@ -25,10 +25,14 @@ def report(request):
     Recharge_balance = 0
     for recharge_payment in Recharge:
         Recharge_balance += int(recharge_payment.quota) * 20
+    Today_recharge_balance = 0
+    for recharge_payment in Recharge_waiting:
+        Today_recharge_balance += int(recharge_payment.quota) * 20
     return render(request, 'report/index.html', {'member': Member,
                                                  'coach': Coach,
                                                  'workout': Workout,
                                                  'recharge': Recharge,
                                                  'w_recharge': Recharge_waiting,
                                                  'balance': Recharge_balance,
-                                                 'appointment': Appointments})
+                                                 'appointment': Appointments,
+                                                 'waiting': Today_recharge_balance})
