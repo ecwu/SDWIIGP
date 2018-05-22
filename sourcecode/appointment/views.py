@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
@@ -46,5 +46,32 @@ def check_coach_time(request):
         coach_name = request.GET.get('coach_name')
         select_date = request.GET.get('select_date')
         select_hour = request.GET.get('select_hour')
-    pass
+        available_time = True
+        coach_object = User.objects.get(pk=coach_name)
+        if Appointment.objects.filter(appointee=coach_object, appoint_time_date=select_date,
+                                      appoint_time_hour=select_hour).exists():
+            available_time = False
+        data = {
+            'available_time': available_time,
+            'coach_name': coach_name,
+            'select_date': select_date,
+            'select_hour': select_hour,
+        }
+        return JsonResponse(data)
 
+
+def make_new_appointment(request):
+    if request.user.is_authenticated:
+        coach_name = request.POST.get('coach_name')
+        select_date = request.POST.get('select_date')
+        select_hour = request.POST.get('select_hour')
+        coach_object = User.objects.get(pk=coach_name)
+        request_user_membercard = MemberCard.objects.get(related_user=request.user)
+        Appointment.objects.create(
+            appointer=request_user_membercard,
+            appointee=coach_object,
+            appoint_time_date=select_date,
+            appoint_time_hour=select_hour,
+        )
+        messages.add_message(request, messages.SUCCESS, 'Appoint Successfully!')
+        return redirect('/appointment')
