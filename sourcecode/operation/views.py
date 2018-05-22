@@ -21,6 +21,8 @@ def operation_checkin(request):
 def operation_recharge(request):
     if not request.user.is_authenticated:
         messages.add_message(request, messages.ERROR, 'Login required.')
+    if request.user.groups.filter(name='coach').exists():
+        messages.add_message(request, messages.ERROR, 'No Permission.')
         return redirect('/')
     padding_request = RechargeLog.objects.filter(is_valid=False)
     return render(request, 'operation/recharge.html', {'PaddingRequest': padding_request})
