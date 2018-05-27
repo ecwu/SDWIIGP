@@ -84,11 +84,22 @@ DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+
+
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'l630003054',
-        'USER': 'l630003054',
-        'PASSWORD': 'SDW2db',
-        'HOST': '115.28.131.117',
+         'NAME': 'l630003054',
+         'USER': 'l630003054',
+         'PASSWORD': 'SDW2db',
+
+        # Bill's db
+         'HOST': '115.28.131.117',
+
+        # Localhost
+        #'NAME': 'l630003054',
+        #'USER': 'root',
+        #'PASSWORD': '',
+        #'HOST': 'localhost',
+
         'PORT': '3306',
     }
 }
