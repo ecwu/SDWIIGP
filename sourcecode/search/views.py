@@ -19,10 +19,10 @@ def search(request):
     if request.method == 'GET' and 'search_key' in request.GET:
         search_key = request.GET.get('search_key')
         try:
-            number_member_card = MemberCard.objects.filter(pk=search_key)
-            number_query_user = User.objects.filter(pk=search_key)
+            number_member_card = MemberCard.objects.filter(pk=search_key)[:10]
+            number_query_user = User.objects.filter(pk=search_key)[:10]
         except ValueError:
             pass
-        string_query_user = User.objects.filter(username__contains=search_key)
+        string_query_user = User.objects.filter(username__contains=search_key)[:10]
 
     return render(request, 'search/index.html', {'number_query_user' : number_query_user, 'search_key': search_key, 'member_card_owner': number_member_card, 'string_query_user': string_query_user})

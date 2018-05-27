@@ -24,7 +24,7 @@ def operation_recharge(request):
     if request.user.groups.filter(name='coach').exists():
         messages.add_message(request, messages.ERROR, 'No Permission.')
         return redirect('/')
-    padding_request = RechargeLog.objects.filter(is_valid=False)
+    padding_request = RechargeLog.objects.filter(is_valid=False)[:10]
     return render(request, 'operation/recharge.html', {'PaddingRequest': padding_request})
 
 

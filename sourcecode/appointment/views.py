@@ -14,12 +14,12 @@ def exist_appointment(request):
         messages.add_message(request, messages.ERROR, 'Login required.')
         return redirect('/')
     if request.user.is_staff or request.user.is_superuser:
-        records = Appointment.objects.all()
+        records = Appointment.objects.all()[:10]
     elif request.user.groups.filter(name='coach').exists():
-        records = Appointment.objects.filter(appointee=request.user)
+        records = Appointment.objects.filter(appointee=request.user)[:10]
     else:
         user_membercard = MemberCard.objects.get(related_user=request.user)
-        records = Appointment.objects.filter(appointer=user_membercard)
+        records = Appointment.objects.filter(appointer=user_membercard)[:10]
     return render(request, 'appointment/appointment.html', {'records': records})
 
 

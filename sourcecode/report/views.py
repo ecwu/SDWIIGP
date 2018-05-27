@@ -16,12 +16,12 @@ def report(request):
     if not (request.user.is_authenticated and request.user.is_staff):
         messages.add_message(request, messages.ERROR, 'No Permission.')
         return redirect('/')
-    Member = MemberCard.objects.all()
-    Coach = User.objects.filter(groups__name='coach')
-    Workout = WorkoutRecord.objects.all()
+    Member = MemberCard.objects.all().count()
+    Coach = User.objects.filter(groups__name='coach').count()
+    Workout = WorkoutRecord.objects.all().count()
     Recharge = RechargeLog.objects.all()
     Recharge_waiting = RechargeLog.objects.filter(is_valid=False)
-    Appointments = Appointment.objects.all()
+    Appointments = Appointment.objects.all().count()
     Recharge_balance = 0
     for recharge_payment in Recharge:
         Recharge_balance += int(recharge_payment.quota) * 20
