@@ -92,7 +92,10 @@ DATABASES = {
          'PASSWORD': 'SDW2db',
 
         # Bill's db
-         'HOST': '115.28.131.117',
+        # 'HOST': '115.28.131.117',
+
+        # hj's db
+        'HOST': '172.16.199.70',
 
         # Localhost
         #'NAME': 'l630003054',
