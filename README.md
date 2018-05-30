@@ -3,7 +3,7 @@ Software Development Workshiop II Group Project
 ***
 
 
-Current Status: `Requirement Desiging`
+Current Status: `Finished`
 
 ## How to deploy
 1. install requirements using pip
@@ -15,8 +15,6 @@ Current Status: `Requirement Desiging`
 ![GMS Black Icon](design/img/logo_t_black.png)
 
 A Gym management System
-
-Name: To be announced
 
 ## Author
 
